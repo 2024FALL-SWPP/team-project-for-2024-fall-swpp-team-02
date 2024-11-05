@@ -9,11 +9,11 @@ public class LevelOver : MonoBehaviour
     public Button goBackButton;
     public Button restartButton;
 
-    private int stage;
+    private int level;
     // Start is called before the first frame update
     void Start()
     {
-        stage = PlayerPrefs.GetInt("Stage", 0);
+        level = PlayerPrefs.GetInt("Level", 0);
     }
 
     // Update is called once per frame
@@ -29,6 +29,6 @@ public class LevelOver : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("Stage" + stage.ToString());
+        SceneManager.LoadScene("Level" + level.ToString());
     }
 }
