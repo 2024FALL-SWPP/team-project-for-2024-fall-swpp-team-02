@@ -5,54 +5,54 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SelectStage : MonoBehaviour
+public class SelectLevel : MonoBehaviour
 {
-    public Button stage1Button;
-    public Button stage2Button;
-    public Button stage3Button;
-    public TextMeshProUGUI stage1Text;
-    public TextMeshProUGUI stage2Text;
-    public TextMeshProUGUI stage3Text;
+    public Button level1Button;
+    public Button level2Button;
+    public Button level3Button;
+    public TextMeshProUGUI level1Text;
+    public TextMeshProUGUI level2Text;
+    public TextMeshProUGUI level3Text;
 
-    public List<Image> stage1Stars;
-    public List<Image> stage2Stars;
-    public List<Image> stage3Stars;
+    public List<Image> level1Stars;
+    public List<Image> level2Stars;
+    public List<Image> level3Stars;
     // Start is called before the first frame update
     void Start()
     {
         // Stage 1
-        StageData stage1Data = LoadLevelData(1);
-        if (stage1Data.isPlayable) stage1Button.interactable = true;
-        if (stage1Data.isCleared)
+        LevelData level1Data = LoadLevelData(1);
+        if (level1Data.isPlayable) level1Button.interactable = true;
+        if (level1Data.isCleared)
         {
-            stage1Text.enabled = true;
-            for (int i = 0; i < stage1Stars.Count; i++)
+            level1Text.enabled = true;
+            for (int i = 0; i < level1Stars.Count; i++)
             {
-                if (i < stage1Data.stars) stage1Stars[i].enabled = true;
+                if (i < level1Data.stars) level1Stars[i].enabled = true;
             }
         }
 
         // Stage 2
-        StageData stage2Data = LoadLevelData(2);
-        if (stage2Data.isPlayable) stage2Button.interactable = true;
-        if (stage2Data.isCleared)
+        LevelData level2Data = LoadLevelData(2);
+        if (level2Data.isPlayable) level2Button.interactable = true;
+        if (level2Data.isCleared)
         {
-            stage2Text.enabled = true;
-            for (int i = 0; i < stage2Stars.Count; i++)
+            level2Text.enabled = true;
+            for (int i = 0; i < level2Stars.Count; i++)
             {
-                if (i < stage2Data.stars) stage2Stars[i].enabled = true;
+                if (i < level2Data.stars) level2Stars[i].enabled = true;
             }
         }
 
         // Stage 3
-        StageData stage3Data = LoadLevelData(3);
-        if (stage3Data.isPlayable) stage3Button.interactable = true;
-        if (stage3Data.isCleared)
+        LevelData level3Data = LoadLevelData(3);
+        if (level3Data.isPlayable) level3Button.interactable = true;
+        if (level3Data.isCleared)
         {
-            stage3Text.enabled = true;
-            for (int i = 0; i < stage3Stars.Count; i++)
+            level3Text.enabled = true;
+            for (int i = 0; i < level3Stars.Count; i++)
             {
-                if (i < stage3Data.stars) stage3Stars[i].enabled = true;
+                if (i < level3Data.stars) level3Stars[i].enabled = true;
             }
         }
         
@@ -64,27 +64,27 @@ public class SelectStage : MonoBehaviour
         
     }
 
-    private StageData LoadLevelData(int stage)
+    private LevelData LoadLevelData(int level)
     {
-        if (PlayerPrefs.HasKey("StageData" + stage.ToString()))
+        if (PlayerPrefs.HasKey("LevelData" + level.ToString()))
         {
-            string jsonData = PlayerPrefs.GetString("StageData" + stage.ToString());
-            return JsonUtility.FromJson<StageData>(jsonData);
+            string jsonData = PlayerPrefs.GetString("LevelData" + level.ToString());
+            return JsonUtility.FromJson<LevelData>(jsonData);
         }
 
-        return new StageData(stage);
+        return new LevelData(level);
     }
 
-    public void SelectStage1()
+    public void SelectLevel1()
     {
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("Level1");
     }
-    public void SelectStage2()
+    public void SelectLevel2()
     {
-        SceneManager.LoadScene("Stage2");
+        SceneManager.LoadScene("Level2");
     }
-    public void SelectStage3()
+    public void SelectLevel3()
     {
-        SceneManager.LoadScene("Stage3");
+        SceneManager.LoadScene("Level3");
     }
 }

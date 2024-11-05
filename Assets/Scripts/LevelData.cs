@@ -5,19 +5,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StageData
+public class LevelData
 {
     public int stage;
     public int stars;
     public bool isCleared;
     public bool isPlayable;
 
-    public StageData(int stageIndex)
+    public LevelData(int levelIndex)
     {
-        stage = stageIndex;
+        stage = levelIndex;
         stars = 0;
         isCleared = false;
-        if (stageIndex == 1) isPlayable = true;
+        if (levelIndex == 1) isPlayable = true;
         else isPlayable = false;
     }
 }
