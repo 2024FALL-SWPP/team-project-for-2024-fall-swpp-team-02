@@ -12,9 +12,9 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         // Player movement
-        if (Input.GetKeyDown(playerLeftKey)) player.Move(Direction.Left);
-        if (Input.GetKeyDown(playerRightKey)) player.Move(Direction.Right);
-        if (Input.GetKeyDown(playerFrontKey)) player.Move(Direction.Front);
-        if (Input.GetKeyDown(playerBackKey)) player.Move(Direction.Back);
+        if (Input.GetKey(playerLeftKey)) player.Move(Direction.Left);
+        if (Input.GetKey(playerRightKey)) player.Move(Direction.Right);
+        if (Input.GetKey(playerFrontKey)) player.Move(Direction.Front);
+        if (Input.GetKey(playerBackKey)) player.Move(Direction.Back);
     }
 }
