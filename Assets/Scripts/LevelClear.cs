@@ -13,10 +13,10 @@ public class LevelClear : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinsText;
     public List<Image> starsList;
-    private int stage;
+    private int level;
     void Start()
     {
-        stage = PlayerPrefs.GetInt("stage");
+        level = PlayerPrefs.GetInt("level");
         int score = PlayerPrefs.GetInt("score", 0);
         int stars = PlayerPrefs.GetInt("stars", 0);
         int coinsCollected = PlayerPrefs.GetInt("coinsCollected", 0);
@@ -41,6 +41,6 @@ public class LevelClear : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("Stage" + stage.ToString());
+        SceneManager.LoadScene("Level" + level.ToString());
     }
 }
