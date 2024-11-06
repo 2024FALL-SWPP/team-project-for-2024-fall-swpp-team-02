@@ -66,9 +66,10 @@ public class SelectLevel : MonoBehaviour
 
     private LevelData LoadLevelData(int level)
     {
-        if (PlayerPrefs.HasKey("LevelData" + level.ToString()))
+        string key = $"LevelData{level}";
+        if (PlayerPrefs.HasKey(key))
         {
-            string jsonData = PlayerPrefs.GetString("LevelData" + level.ToString());
+            string jsonData = PlayerPrefs.GetString(key);
             return JsonUtility.FromJson<LevelData>(jsonData);
         }
 

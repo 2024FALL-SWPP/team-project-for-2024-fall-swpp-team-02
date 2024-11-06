@@ -2789,9 +2789,18 @@ MonoBehaviour:
   level1Text: {fileID: 1671267913}
   level2Text: {fileID: 1764261561}
   level3Text: {fileID: 749608246}
-  level1Stars: []
-  level2Stars: []
-  level3Stars: []
+  level1Stars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level2Stars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  level3Stars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &2101980126
 Transform:
   m_ObjectHideFlags: 0

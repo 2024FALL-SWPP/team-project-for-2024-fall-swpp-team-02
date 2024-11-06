@@ -7,17 +7,16 @@ using UnityEngine.UI;
 
 public class LevelData
 {
-    public int stage;
+    public int level;
     public int stars;
     public bool isCleared;
     public bool isPlayable;
 
     public LevelData(int levelIndex)
     {
-        stage = levelIndex;
+        level = levelIndex;
         stars = 0;
         isCleared = false;
-        if (levelIndex == 1) isPlayable = true;
-        else isPlayable = false;
+        isPlayable = levelIndex == 1;
     }
 }
