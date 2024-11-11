@@ -9,10 +9,11 @@ public class CameraBehaviour : MonoBehaviour
 
     public float speed = 1.0f;
 
+    public float maxOffset = 5.0f;
+    public float minOffset = -2.0f;
 
-    private GameObject gameManager;
 
-    private float[] offset = { 10.0f, 7.0f, -5.0f };
+    private Vector3 offset = new Vector3(10.0f, 7.0f, -5.0f);
 
     private float currentPos = 0.0f;
 
@@ -21,26 +22,17 @@ public class CameraBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
-
         currentPos = player.transform.position.z;
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentPos += speed * Time.deltaTime;
+        currentPos = Mathf.Max(currentPos + speed * Time.deltaTime, player.transform.position.z - maxOffset);
 
-        if (player.transform.position.z >= currentPos + 5.0f)
-            currentPos += player.transform.position.z - (currentPos + 5.0f);
+        transform.position = offset + new Vector3(0, 0, currentPos);
 
-        transform.position = new Vector3(
-            offset[0],
-            offset[1],
-            currentPos + offset[2]
-        );
-
-        if (player.transform.position.z < currentPos - 2)
+        if (player.transform.position.z < currentPos + minOffset)
         {
             player.GetComponent<PlayerBehaviour>().Respawn();
         }

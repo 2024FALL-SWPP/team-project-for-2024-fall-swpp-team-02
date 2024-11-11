@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,7 +8,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float cooldown = 0.5f;
 
-    private GameObject gameManager;
+    private GameObject stageManager;
 
     private int life = 5;
 
@@ -48,7 +47,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
-        gameManager = GameObject.Find("GameManager");
+        stageManager = GameObject.Find("stageManager");
     }
 
     private void DecreaseLife()
@@ -57,7 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Life: " + life);
 
         if (life <= 0)
-            gameManager.GetComponent<GameManager>().GameOver();
+            stageManager.GetComponent<StageManager>().GameOver();
     }
 
     public void Respawn()
