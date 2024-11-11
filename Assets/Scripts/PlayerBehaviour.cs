@@ -14,6 +14,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Tilemap _obstacleTilemap;
     private bool _isInCooldown;
+
+    private const float _respawnZAdd = 7.0f;
+    private const float _respawnX = 7.5f;
+
+
     /// <summary>
     /// Moves player 1 block to the given position.
     /// If an obstacle is in front of the player, the command doesn't work.
@@ -63,7 +68,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         DecreaseLife();
 
-        transform.position += new Vector3(0, 0, 7);
+        transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
 
         // If there's an obstacle on the respawn position, move to the nearest empty block
         int dx = 1;
