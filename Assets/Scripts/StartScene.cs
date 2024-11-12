@@ -20,7 +20,7 @@ public class StartScene : MonoBehaviour
 
     public void SelectLevel()
     {
-        SceneManager.LoadScene("SelectLevelScene");
+        SceneManager.LoadScene("LevelSelectScene");
     }
 
     public void PowerUp()
