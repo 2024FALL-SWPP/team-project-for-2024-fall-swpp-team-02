@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedBinMarker
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 313ae4b57a2d56442867fc32c5db6981, type: 3}
-  m_Color: {r: 1, g: 0.13679248, b: 0.13679248, a: 1}
+  m_Color: {r: 1, g: 0.07075471, b: 0.07075471, a: 1}
   m_Transform:
     e00: 1
     e01: 0
