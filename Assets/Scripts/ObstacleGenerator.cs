@@ -4,10 +4,7 @@ using UnityEngine.Tilemaps;
 public class ObstacleGenerator : MonoBehaviour
 {
     [SerializeField] private Tilemap obstacleTilemap;
-    [SerializeField] private TileBase dummyTile;
     [SerializeField] private ObstacleMapping[] obstacleMappings;
-
-    private Vector3 _hideOffset = new Vector3(0f, -0.02f, 0f);
     
     private void Start()
     {
@@ -31,7 +28,6 @@ public class ObstacleGenerator : MonoBehaviour
             var objectPos = obstacleTilemap.CellToWorld(markerPos) + offset;
             
             Instantiate(tileObject, objectPos, Quaternion.identity);
-            obstacleTilemap.SetTile(markerPos, dummyTile);
         }
         
         obstacleTilemap.GetComponent<TilemapRenderer>().enabled = false;
