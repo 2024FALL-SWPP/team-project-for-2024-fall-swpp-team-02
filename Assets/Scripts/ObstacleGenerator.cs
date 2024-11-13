@@ -21,7 +21,7 @@ public class ObstacleGenerator : MonoBehaviour
 
         foreach (var markerPos in markerPosEnumerator)
         {
-            var tile = obstacleTilemap.GetTile(markerPos);
+            var tile = (Tile) obstacleTilemap.GetTile(markerPos);
             var tileObject = GetMatch(tile);
             if (tileObject == null) continue;
             
@@ -29,6 +29,8 @@ public class ObstacleGenerator : MonoBehaviour
             var objectPos = obstacleTilemap.CellToWorld(markerPos) + offset;
             
             Instantiate(tileObject, objectPos, Quaternion.identity);
+
+            tile.color = new Color(1f, 1f, 1f, 0f);
             obstacleTilemap.SetTile(markerPos, dummyTile);
         }
     }
