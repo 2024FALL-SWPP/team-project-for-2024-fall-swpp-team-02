@@ -10,6 +10,9 @@ public class SelectLevel : MonoBehaviour
     public Button level1Button;
     public Button level2Button;
     public Button level3Button;
+
+    public Button goBackButton;
+    
     public TextMeshProUGUI level1Text;
     public TextMeshProUGUI level2Text;
     public TextMeshProUGUI level3Text;
@@ -87,5 +90,10 @@ public class SelectLevel : MonoBehaviour
     public void SelectLevel3()
     {
         SceneManager.LoadScene("Level3");
+    }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene("StartScene");
     }
 }
