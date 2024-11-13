@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueBinMarker
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 313ae4b57a2d56442867fc32c5db6981, type: 3}
-  m_Color: {r: 0.18396229, g: 0.30640343, b: 1, a: 1}
+  m_Color: {r: 0.21028827, g: 0.19339621, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

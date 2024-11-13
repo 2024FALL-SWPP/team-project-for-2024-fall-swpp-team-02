@@ -6,6 +6,8 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] private Tilemap obstacleTilemap;
     [SerializeField] private TileBase dummyTile;
     [SerializeField] private ObstacleMapping[] obstacleMappings;
+
+    private Vector3 _hideOffset = new Vector3(0f, -0.02f, 0f);
     
     private void Start()
     {
@@ -21,7 +23,7 @@ public class ObstacleGenerator : MonoBehaviour
 
         foreach (var markerPos in markerPosEnumerator)
         {
-            var tile = (Tile) obstacleTilemap.GetTile(markerPos);
+            var tile = obstacleTilemap.GetTile(markerPos);
             var tileObject = GetMatch(tile);
             if (tileObject == null) continue;
             
@@ -29,10 +31,10 @@ public class ObstacleGenerator : MonoBehaviour
             var objectPos = obstacleTilemap.CellToWorld(markerPos) + offset;
             
             Instantiate(tileObject, objectPos, Quaternion.identity);
-
-            tile.color = new Color(1f, 1f, 1f, 0f);
             obstacleTilemap.SetTile(markerPos, dummyTile);
         }
+        
+        obstacleTilemap.GetComponent<TilemapRenderer>().enabled = false;
     }
 
     private GameObject GetMatch(TileBase marker)
