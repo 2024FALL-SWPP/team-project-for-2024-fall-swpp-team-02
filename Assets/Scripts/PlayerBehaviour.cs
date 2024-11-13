@@ -8,8 +8,6 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float cooldown = 0.5f;
 
-    private GameObject stageManager;
-
     private int life = 5;
 
     private Tilemap _obstacleTilemap;
@@ -52,7 +50,6 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
-        stageManager = GameObject.Find("stageManager");
     }
 
     private void DecreaseLife()
@@ -61,7 +58,7 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Life: " + life);
 
         if (life <= 0)
-            stageManager.GetComponent<StageManager>().GameOver();
+            StageManager.Instance.GameOver();
     }
 
     public void Respawn()
