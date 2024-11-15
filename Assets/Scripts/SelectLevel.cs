@@ -69,26 +69,25 @@ public class SelectLevel : MonoBehaviour
 
     private LevelData LoadLevelData(int level)
     {
-        string key = $"LevelData{level}";
-        if (PlayerPrefs.HasKey(key))
-        {
-            string jsonData = PlayerPrefs.GetString(key);
-            return JsonUtility.FromJson<LevelData>(jsonData);
-        }
-
-        return new LevelData(level);
+        return DataManager.Instance.GetLevelData(level);
     }
 
     public void SelectLevel1()
     {
+        ActiveLevelData activeLevelData = new ActiveLevelData(1);
+        DataManager.Instance.SetActiveLevelData(activeLevelData);
         SceneManager.LoadScene("Level1");
     }
     public void SelectLevel2()
     {
+        ActiveLevelData activeLevelData = new ActiveLevelData(2);
+        DataManager.Instance.SetActiveLevelData(activeLevelData);
         SceneManager.LoadScene("Level2");
     }
     public void SelectLevel3()
     {
+        ActiveLevelData activeLevelData = new ActiveLevelData(3);
+        DataManager.Instance.SetActiveLevelData(activeLevelData);
         SceneManager.LoadScene("Level3");
     }
 

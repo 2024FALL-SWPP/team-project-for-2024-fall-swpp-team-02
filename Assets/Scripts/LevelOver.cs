@@ -13,7 +13,7 @@ public class LevelOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        level = PlayerPrefs.GetInt("Level", 0);
+        level = DataManager.Instance.GetActiveLevelData().level;
     }
 
     // Update is called once per frame
