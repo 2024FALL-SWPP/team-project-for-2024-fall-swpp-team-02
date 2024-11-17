@@ -57,11 +57,11 @@ public class LevelClear : MonoBehaviour
         if (levelData.isCleared)
         {
             int previousStars = levelData.stars;
-            coins = levelData.stars - previousStars;
+            coins = levelData.stars - previousStars >= 0 ? levelData.stars - previousStars : 0;
         }
         else
         {
-            coins = levelData.stars;
+            coins = stars;
         }
 
         return coins;
