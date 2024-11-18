@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,22 +17,84 @@ public class LevelClear : MonoBehaviour
     private int level;
     void Start()
     {
-        level = PlayerPrefs.GetInt("level");
-        int score = PlayerPrefs.GetInt("score", 0);
-        int stars = PlayerPrefs.GetInt("stars", 0);
-        int coinsCollected = PlayerPrefs.GetInt("coinsCollected", 0);
+        ActiveLevelData activeLevelData = DataManager.Instance.GetActiveLevelData();
+        int score = activeLevelData.score;
+        level = activeLevelData.level;
+
+        int starsCollected = CalculateStars(score);
+        int coinsCollected = CalculateCoins(level, starsCollected);
+
         scoreText.text = "Score: " + score.ToString();
         coinsText.text = "Coins: " + coinsCollected.ToString();
-        for (int i = 0; i < starsList.Count; i++)
+
+        for (int i = 0; i < starsCollected; i++)
         {
-            if (i < stars) starsList[i].enabled = true;
+            starsList[i].enabled = true;
         }
+
+        UpdateLevelData(level, starsCollected);
+        UpdateCoinData(coinsCollected);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    private int CalculateStars(int score)
+    {
+        if (score >= 90) return 3;
+        else if (score >= 80) return 2;
+        else if (score >= 70) return 1;
+        else return 0;
+    }
+
+    private int CalculateCoins(int level, int stars)
+    {
+        LevelData levelData = DataManager.Instance.GetLevelData(level);
+        int coins;
+        if (levelData.isCleared)
+        {
+            int previousStars = levelData.stars;
+            coins = Math.Max(0, stars - previousStars);
+        }
+        else
+        {
+            coins = stars;
+        }
+
+        return coins;
+    }
+
+    private void UpdateLevelData(int level, int stars)
+    {
+        LevelData levelData = DataManager.Instance.GetLevelData(level);
+        if (levelData.isCleared)
+        {
+            levelData.stars = levelData.stars > stars ? levelData.stars : stars;
+        }
+        else
+        {
+            levelData.stars = stars;
+            levelData.isCleared = true;
+        }
+        DataManager.Instance.SetLevelData(level, levelData);
+
+        if (level < 3)
+        {
+            LevelData nextLevelData = DataManager.Instance.GetLevelData(level + 1);
+            nextLevelData.isPlayable = true;
+            DataManager.Instance.SetLevelData(level + 1, nextLevelData);
+        }
+    }
+
+    private void UpdateCoinData(int coinsCollected)
+    {
+        CoinData coinData = DataManager.Instance.GetCoinData();
+        coinData.coins += coinsCollected;
+        DataManager.Instance.SetCoinData(coinData);
     }
 
     public void GoBack()
