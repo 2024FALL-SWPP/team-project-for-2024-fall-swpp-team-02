@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,27 +21,27 @@ public class LevelClear : MonoBehaviour
         ActiveLevelData activeLevelData = DataManager.Instance.GetActiveLevelData();
         int score = activeLevelData.score;
         level = activeLevelData.level;
-        
+
         int starsCollected = CalculateStars(score);
         int coinsCollected = CalculateCoins(level, starsCollected);
-        
+
         scoreText.text = "Score: " + score.ToString();
         coinsText.text = "Coins: " + coinsCollected.ToString();
-        
+
         for (int i = 0; i < starsCollected; i++)
         {
             starsList[i].enabled = true;
         }
-        
+
         UpdateLevelData(level, starsCollected);
         UpdateCoinData(coinsCollected);
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private int CalculateStars(int score)
@@ -57,7 +59,7 @@ public class LevelClear : MonoBehaviour
         if (levelData.isCleared)
         {
             int previousStars = levelData.stars;
-            coins = levelData.stars - previousStars >= 0 ? levelData.stars - previousStars : 0;
+            coins = Math.Max(0, stars - previousStars);
         }
         else
         {
