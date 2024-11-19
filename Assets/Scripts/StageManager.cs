@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
@@ -34,6 +35,6 @@ public class StageManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("Game Over");
+        SceneManager.LoadScene("LevelOverScene");
     }
 }
