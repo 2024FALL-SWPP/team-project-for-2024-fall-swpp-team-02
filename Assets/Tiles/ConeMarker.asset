@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Normal_marker
+  m_Name: ConeMarker
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: d8073e8ea4e04dd44a477a915abacc93, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f81a3d094874647478c5f8e22ffbb50b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
