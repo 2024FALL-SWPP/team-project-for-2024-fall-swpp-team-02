@@ -5628,6 +5628,20 @@ MonoBehaviour:
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
   cooldown: 0.5
+--- !u!114 &466761509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466761505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8599bfff3f3c5be49bb9eed097b41799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trashTilemap: {fileID: 586305505}
+  trashStorage: {fileID: 11400000, guid: fcbf22c6c89511744befcfea9e6a2c54, type: 2}
 --- !u!1 &471756670
 GameObject:
   m_ObjectHideFlags: 0
@@ -23592,6 +23606,7 @@ MonoBehaviour:
     - {fileID: 2379069296815962343, guid: cfbe2ef680cb38a4aaedd3d210392349, type: 3}
     - {fileID: 4673554988342177545, guid: 61b4924217e7eb543ab39f13fb34fb68, type: 3}
     - {fileID: 5382996660327333013, guid: 977488ddf2a8ebc4780c8e2fdae40ebf, type: 3}
+  trashStorage: {fileID: 11400000, guid: fcbf22c6c89511744befcfea9e6a2c54, type: 2}
 --- !u!1 &1921616599
 GameObject:
   m_ObjectHideFlags: 0

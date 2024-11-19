@@ -1,8 +1,8 @@
-public enum Trash
+public enum TrashType
 {
+    None,
     Paper,
     Can,
     Pet,
     Food,
-    None,
 }

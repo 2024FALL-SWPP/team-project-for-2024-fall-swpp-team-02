@@ -6,6 +6,7 @@ public class TrashSpawner : MonoBehaviour
     private GameObject[] _trashes;
     [SerializeField] private Tilemap trashTilemap;
     [SerializeField] private TrashMapping[] trashMappings;
+    [SerializeField] private TrashStorage trashStorage;
     
     /// <summary>
     /// Generates Trash at the given tilemap based position.
@@ -20,7 +21,8 @@ public class TrashSpawner : MonoBehaviour
         var offset = Quaternion.Euler(90f, 0f, 0f) * trashTilemap.cellSize / 2;
         var objectPos = trashTilemap.CellToWorld(tilePos) + offset;
         
-        Instantiate(tileObject, objectPos, Quaternion.identity);
+        var trashObject = Instantiate(tileObject, objectPos, Quaternion.identity);
+        trashStorage.AddTrash(trashObject);
     }
 
     /// <summary>
@@ -45,6 +47,7 @@ public class TrashSpawner : MonoBehaviour
 
     private void Start()
     {
+        trashStorage.Prune();
         InitialSpawn();
         trashTilemap.GetComponent<TilemapRenderer>().enabled = false;
     }
