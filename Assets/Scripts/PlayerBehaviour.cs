@@ -8,7 +8,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float cooldown = 0.5f;
 
-    private int life = 5;
+    private int life = 3;
 
     private Tilemap _obstacleTilemap;
     private bool _isInCooldown;
