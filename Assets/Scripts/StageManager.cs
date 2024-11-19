@@ -36,4 +36,19 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("Game Over");
     }
+
+    public bool IsPaused()
+    {
+        return Time.timeScale == 0;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
 }
