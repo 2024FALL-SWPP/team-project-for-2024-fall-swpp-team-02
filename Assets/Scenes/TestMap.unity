@@ -4207,6 +4207,7 @@ GameObject:
   - component: {fileID: 388773501}
   - component: {fileID: 388773503}
   - component: {fileID: 388773502}
+  - component: {fileID: 388773504}
   m_Layer: 5
   m_Name: ScoreBackground
   m_TagString: Untagged
@@ -4272,6 +4273,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388773500}
   m_CullTransparentMesh: 1
+--- !u!114 &388773504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388773500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 850a4a5b37ccc4ef288a595fb731dd34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1593161395}
 --- !u!1 &391348438
 GameObject:
   m_ObjectHideFlags: 0
@@ -10590,6 +10604,7 @@ GameObject:
   - component: {fileID: 885311131}
   - component: {fileID: 885311133}
   - component: {fileID: 885311132}
+  - component: {fileID: 885311134}
   m_Layer: 5
   m_Name: BatteryBackground
   m_TagString: Untagged
@@ -10658,6 +10673,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885311130}
   m_CullTransparentMesh: 1
+--- !u!114 &885311134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885311130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9194fbf4570b4838b72b8b8fc8bc184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batteries:
+  - {fileID: 1988683508}
+  - {fileID: 1250724882}
+  - {fileID: 522915678}
 --- !u!1 &897630184
 GameObject:
   m_ObjectHideFlags: 0
@@ -18389,6 +18420,7 @@ GameObject:
   - component: {fileID: 1561366744}
   - component: {fileID: 1561366746}
   - component: {fileID: 1561366745}
+  - component: {fileID: 1561366747}
   m_Layer: 5
   m_Name: DistanceBar
   m_TagString: Untagged
@@ -18455,6 +18487,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561366743}
   m_CullTransparentMesh: 1
+--- !u!114 &1561366747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561366743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d3d24211cf44278f3fc502ceaf594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distancePointer: {fileID: 1943174835}
+  camera: {fileID: 1464877205}
 --- !u!1 &1579449942
 GameObject:
   m_ObjectHideFlags: 0
@@ -20306,6 +20352,7 @@ GameObject:
   - component: {fileID: 1662455619}
   - component: {fileID: 1662455618}
   - component: {fileID: 1662455617}
+  - component: {fileID: 1662455620}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -20376,7 +20423,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1662455618}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1662455620}
+        m_TargetAssemblyTypeName: PauseUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1662455618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20415,6 +20474,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662455615}
   m_CullTransparentMesh: 1
+--- !u!114 &1662455620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662455615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a12e05194120e46e2900b9a2d70c8e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1662847375
 GameObject:
   m_ObjectHideFlags: 0
