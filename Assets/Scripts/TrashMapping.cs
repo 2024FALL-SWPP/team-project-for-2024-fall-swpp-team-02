@@ -1,27 +1,12 @@
-﻿using System;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-[Serializable]
-public class TrashMapping
+[CreateAssetMenu(fileName = "TrashMapping", menuName = "Custom Storage/Trash Mapping")]
+public class TrashMapping : ScriptableObject
 {
-    public TileBase markerTile;
-    public GameObject[] trashPrefabs;
+    public TrashMappingItem[] items;
 
-    public bool Match(TileBase other)
+    public TrashType SubtypeToType(TrashSubtype subtype)
     {
-        return markerTile == other;
-    }
-
-    /// <summary>
-    /// Gets random trash prefab. Returns null if there's no prefab in the mapping.
-    /// </summary>
-    /// <returns>Random prefab of the mapping</returns>
-    public GameObject GetRandomPrefab()
-    {
-        if (trashPrefabs.Length == 0) return null;
-        
-        var index = UnityEngine.Random.Range(0, trashPrefabs.Length);
-        return trashPrefabs[index];
+        return TrashType.None;
     }
 }
