@@ -16,6 +16,9 @@ public class PlayerBehaviour : MonoBehaviour
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
 
+    private float goalZ;
+    
+
 
     /// <summary>
     /// Moves player 1 block to the given position.
@@ -39,6 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void UpdatePos(Direction direction)
     {
         transform.position += direction.Value;
+        if (transform.position.z >= goalZ) StageManager.Instance.GameClear();
     }
 
     private IEnumerator CooldownRoutine()
@@ -50,6 +54,8 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
+        // goalZ = StageManager.Instance.GetGoalZ();
+        goalZ = 24.5f; //for test map
     }
 
     private void DecreaseLife()

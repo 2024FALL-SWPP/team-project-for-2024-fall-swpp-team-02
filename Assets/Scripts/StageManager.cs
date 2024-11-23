@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
+    private List<float> goalZList = new List<float>() { 24.5f, 24.5f, 24.5f }; //modify after making real level map
     public static StageManager Instance
     {
         get
@@ -36,5 +38,16 @@ public class StageManager : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene("LevelOverScene");
+    }
+
+    public void GameClear()
+    {
+        SceneManager.LoadScene("LevelClearScene");
+    }
+
+    public float GetGoalZ()
+    {
+        int level = DataManager.Instance.GetActiveLevelData().level;
+        return goalZList[level-1];
     }
 }
