@@ -26,18 +26,21 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
-        _targetPosition = transform.position; // Initialize target position
+        _targetPosition = transform.position; 
     }
 
+    /// <summary>
+    /// Handles the player's movement and rotation toward the target position.
+    /// Manages the player's walking animation state.
+    /// </summary>
     private void Update()
     {
-        // Smooth movement toward the target position
         if (_isWalking)
         {
             // Move the player toward the target position
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
 
-            // Smoothly rotate the player toward the direction of movement
+            // Rotate the player toward the direction of movement
             Vector3 directionToTarget = _targetPosition - transform.position;
             if (directionToTarget != Vector3.zero)
             {
@@ -49,7 +52,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
             {
                 _isWalking = false;
-                _animator.SetBool("isWalking", false); // Stop walk animation
+                _animator.SetBool("isWalking", false);
             }
         }
     }
@@ -62,11 +65,11 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
-        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;  // Condition check
+        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return; 
 
-        _targetPosition = transform.position + direction.Value; // Set target position
-        _isWalking = true; // Start walking
-        _animator.SetBool("isWalking", true); // Trigger walk animation
+        _targetPosition = transform.position + direction.Value;
+        _isWalking = true; 
+        _animator.SetBool("isWalking", true); 
 
         _isInCooldown = true;
         StartCoroutine(nameof(CooldownRoutine));
