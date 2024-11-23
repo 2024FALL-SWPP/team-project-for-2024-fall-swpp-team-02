@@ -5640,8 +5640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8599bfff3f3c5be49bb9eed097b41799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trashTilemap: {fileID: 586305505}
-  trashStorage: {fileID: 11400000, guid: fcbf22c6c89511744befcfea9e6a2c54, type: 2}
+  trashGrid: {fileID: 2048045676}
 --- !u!1 &471756670
 GameObject:
   m_ObjectHideFlags: 0
@@ -6967,6 +6966,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: b3e5db6f2614d9d44aeb807785d13d84, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: b2e52e1a2409aad4da2fba4387f09a09, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -7004,11 +7005,13 @@ Tilemap:
     m_Data: {r: 0.011263967, g: 1, b: 0, a: 1}
   - m_RefCount: 2
     m_Data: {r: 0.98064375, g: 1, b: 0, a: 1}
+  - m_RefCount: 0
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 11, y: 18, z: 1}
+  m_Size: {x: 12, y: 18, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 1
   m_TileOrientationMatrix:
@@ -23588,7 +23591,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49f6be33b86517409842087b8f6569b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trashTilemap: {fileID: 586305505}
+  trashGrid: {fileID: 2048045676}
+  trashMapping: {fileID: 11400000, guid: c6844e95e016d374c9c1664efff4c6fa, type: 2}
   trashMappings:
   - markerTile: {fileID: 11400000, guid: b2e52e1a2409aad4da2fba4387f09a09, type: 2}
     trashPrefabs:
@@ -23606,7 +23610,6 @@ MonoBehaviour:
     - {fileID: 2379069296815962343, guid: cfbe2ef680cb38a4aaedd3d210392349, type: 3}
     - {fileID: 4673554988342177545, guid: 61b4924217e7eb543ab39f13fb34fb68, type: 3}
     - {fileID: 5382996660327333013, guid: 977488ddf2a8ebc4780c8e2fdae40ebf, type: 3}
-  trashStorage: {fileID: 11400000, guid: fcbf22c6c89511744befcfea9e6a2c54, type: 2}
 --- !u!1 &1921616599
 GameObject:
   m_ObjectHideFlags: 0
@@ -25945,6 +25948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2048045677}
   - component: {fileID: 2048045676}
+  - component: {fileID: 2048045678}
   m_Layer: 0
   m_Name: TrashTile
   m_TagString: Untagged
@@ -25980,6 +25984,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2048045678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048045675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7bb9acb2cffc5f45abddc238a0ad9b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionIntKeys: []
+  m_PositionIntValues: 
+  m_PositionStringKeys: []
+  m_PositionStringValues: []
+  m_PositionFloatKeys: []
+  m_PositionFloatValues: []
+  m_PositionDoubleKeys: []
+  m_PositionDoubleValues: []
+  m_PositionObjectKeys: []
+  m_PositionObjectValues: []
+  m_PositionColorKeys: []
+  m_PositionColorValues: []
 --- !u!1 &2058461162
 GameObject:
   m_ObjectHideFlags: 0

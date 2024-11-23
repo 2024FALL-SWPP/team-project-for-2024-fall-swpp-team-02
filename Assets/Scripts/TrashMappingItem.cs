@@ -8,9 +8,17 @@ public class TrashMappingItem
     public TileBase markerTile;
     public GameObject[] trashPrefabs;
 
-    public bool Match(TileBase other)
+    public bool MatchTile(TileBase tile)
     {
-        return markerTile == other;
+        return markerTile == tile;
+    }
+
+    public bool MatchObject(TrashSubtype subtype)
+    {
+        var ret = false;
+        foreach (var prefab in trashPrefabs)
+            ret = ret || prefab.GetComponent<TrashInfo>().trashSubtype == subtype;
+        return ret;
     }
 
     /// <summary>

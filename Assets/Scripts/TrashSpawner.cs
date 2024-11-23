@@ -5,7 +5,7 @@ public class TrashSpawner : MonoBehaviour
 {
     private GameObject[] _trashes;
     [SerializeField] private Grid trashGrid;
-    [SerializeField] private TrashMappingItem[] trashMappings;
+    [SerializeField] private TrashMapping trashMapping;
     
     private Tilemap _trashTilemap;
     private GridInformation _gridInformation;
@@ -41,10 +41,7 @@ public class TrashSpawner : MonoBehaviour
     private GameObject GetMatch(TileBase marker)
     {
         if (marker == null) return null;
-        foreach (var mapping in trashMappings)
-            if (mapping.Match(marker)) return mapping.GetRandomPrefab();
-
-        return null;
+        return trashMapping.MarkerToPrefab(marker);
     }
 
     private void Start()
