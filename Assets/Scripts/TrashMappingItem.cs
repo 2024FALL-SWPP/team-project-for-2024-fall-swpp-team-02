@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,12 +14,11 @@ public class TrashMappingItem
         return markerTile == tile;
     }
 
-    public bool MatchObject(TrashSubtype subtype)
+    public bool MatchObject(TrashType type)
     {
-        var ret = false;
-        foreach (var prefab in trashPrefabs)
-            ret = ret || prefab.GetComponent<TrashInfo>().trashSubtype == subtype;
-        return ret;
+        return trashPrefabs.Any(
+            prefab => prefab.GetComponent<TrashInfo>().trashType == type
+            );
     }
 
     /// <summary>

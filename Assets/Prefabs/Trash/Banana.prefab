@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76e146df31f2ae4db80d98d858fd6ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trashType: 4
-  trashSubtype: 8
+  trashType: 8
 --- !u!1001 &1825987425420283996
 PrefabInstance:
   m_ObjectHideFlags: 0

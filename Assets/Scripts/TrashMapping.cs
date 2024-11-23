@@ -6,12 +6,12 @@ public class TrashMapping : ScriptableObject
 {
     public TrashMappingItem[] items;
 
-    public TileBase SubtypeToMarker(TrashSubtype subtype)
+    public TileBase SubtypeToMarker(TrashType type)
     {
-        if (subtype == TrashSubtype.None) return null;
+        if (type == TrashType.None) return null;
 
         foreach (var item in items)
-            if (item.MatchObject(subtype)) return item.markerTile;
+            if (item.MatchObject(type)) return item.markerTile;
         return null;
     }
 

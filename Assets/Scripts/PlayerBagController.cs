@@ -11,30 +11,16 @@ public class PlayerBagController
 
     public TrashType GetFirstTrashType()
     {
-        return _playerBag.CheckTrash().Item1;
+        return _playerBag.CheckTrash();
     }
 
-    public TrashSubtype GetFirstTrashSubtype()
+    public List<TrashType> GetTrashList()
     {
-        return _playerBag.CheckTrash().Item2;
+        return _playerBag.GetTrashList();
     }
 
-    public List<(TrashType, TrashSubtype)> GetTrashList()
+    public void AddTrash(TrashType trashType)
     {
-        List<(TrashType, TrashSubtype)> trashList = new();
-        (TrashType, TrashSubtype) buffer;
-
-        while ((buffer = _playerBag.GetFirstTrash()).Item1 != TrashType.None)
-            trashList.Add(buffer);
-
-        foreach (var item in trashList)
-            _playerBag.AddTrash(item);
-
-        return trashList;
-    }
-
-    public void AddTrash(TrashType trashType, TrashSubtype trashSubtype)
-    {
-        _playerBag.AddTrash(trashType, trashSubtype);
+        _playerBag.AddTrash(trashType);
     }
 }

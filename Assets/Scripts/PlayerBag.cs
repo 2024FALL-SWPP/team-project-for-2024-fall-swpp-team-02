@@ -1,37 +1,34 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerBag
 {
-    private Queue<(TrashType, TrashSubtype)> _bag;
+    private Queue<TrashType> _bag;
     private int _size;
-    private (TrashType, TrashSubtype) _none = (TrashType.None, TrashSubtype.None);
 
     public PlayerBag(int bagSize)
     {
-        _bag = new Queue<(TrashType, TrashSubtype)>(bagSize);
+        _bag = new Queue<TrashType>(bagSize);
         _size = bagSize;
     }
     
-    public (TrashType, TrashSubtype) GetFirstTrash()
+    public TrashType GetFirstTrash()
     {
-        return _bag.TryDequeue(out var trash) ? trash : _none;
+        return _bag.TryDequeue(out var trash) ? trash : TrashType.None;
     }
     
-    public (TrashType, TrashSubtype) AddTrash(TrashType trashType, TrashSubtype trashSubtype)
+    public TrashType AddTrash(TrashType trash)
     {
-        return AddTrash((trashType, trashSubtype));
-    }
-
-    public (TrashType, TrashSubtype) AddTrash((TrashType, TrashSubtype) trash)
-    {
-        var overflow = _bag.Count >= _size ? _bag.Dequeue() : _none;
+        var overflow = _bag.Count >= _size ? _bag.Dequeue() : TrashType.None;
         _bag.Enqueue(trash);
         
         return overflow;
     }
     
-    public (TrashType, TrashSubtype) CheckTrash()
+    public TrashType CheckTrash()
     {
-        return _bag.TryPeek(out var trash) ? trash : _none;
+        return _bag.TryPeek(out var trash) ? trash : TrashType.None;
     }
+
+    public List<TrashType> GetTrashList() => _bag.ToList();
 }

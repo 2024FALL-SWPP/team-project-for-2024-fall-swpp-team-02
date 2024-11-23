@@ -40,8 +40,7 @@ public class TrashSpawner : MonoBehaviour
 
     private GameObject GetMatch(TileBase marker)
     {
-        if (marker == null) return null;
-        return trashMapping.MarkerToPrefab(marker);
+        return (marker == null) ? null : trashMapping.MarkerToPrefab(marker);
     }
 
     private void Start()

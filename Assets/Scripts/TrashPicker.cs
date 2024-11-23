@@ -25,7 +25,7 @@ public class TrashPicker : MonoBehaviour
         if (trashObject == null) return;
         
         var trashInfo = trashObject.GetComponent<TrashInfo>();
-        _bagController.AddTrash(trashInfo.trashType, trashInfo.trashSubtype);
+        _bagController.AddTrash(trashInfo.trashType);
         
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
         Destroy(trashObject);

@@ -1,8 +1,12 @@
-public enum TrashType
+﻿public enum TrashType
 {
     None,
-    Paper,
-    Can,
-    Pet,
-    Food,
+    PaperGrouped,
+    PaperSingle1,
+    PaperSingle2,
+    CanHorizontal,
+    CanVertical,
+    PetBottleHorizontal,
+    PetBottleVertical,
+    Banana,
 }

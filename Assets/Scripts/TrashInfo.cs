@@ -1,7 +1,7 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TrashInfo : MonoBehaviour
 {
     public TrashType trashType;
-    public TrashSubtype trashSubtype;
 }
