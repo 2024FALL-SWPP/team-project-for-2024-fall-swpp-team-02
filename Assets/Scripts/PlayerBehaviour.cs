@@ -34,7 +34,16 @@ public class PlayerBehaviour : MonoBehaviour
         // Smooth movement toward the target position
         if (_isWalking)
         {
+            // Move the player toward the target position
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
+
+            // Smoothly rotate the player toward the direction of movement
+            Vector3 directionToTarget = _targetPosition - transform.position;
+            if (directionToTarget != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
 
             // Stop walking when reaching the target position
             if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
