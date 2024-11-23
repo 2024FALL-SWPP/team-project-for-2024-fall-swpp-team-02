@@ -75,6 +75,17 @@ public class PlayerBehaviour : MonoBehaviour
         StartCoroutine(nameof(CooldownRoutine));
     }
 
+    // Temporary function set the trigger "triggerThrow" and "triggerPickUp"
+    public void TriggerThrowAnimation()
+    {
+        _animator.SetTrigger("triggerThrow");
+
+    }
+    public void TriggerPickUpAnimation()
+    {
+        _animator.SetTrigger("triggerPickUp");
+
+    }
     /// <summary>
     /// Updates player's position.
     /// </summary>
