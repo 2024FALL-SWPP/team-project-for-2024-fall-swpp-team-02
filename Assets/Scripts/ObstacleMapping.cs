@@ -10,6 +10,6 @@ public class ObstacleMapping
 
     public bool Match(TileBase other)
     {
-        return (markerTile as Tile).sprite == (other as Tile).sprite;
+        return markerTile == other;
     }
 }
