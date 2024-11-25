@@ -35,3 +35,4 @@ jobs:
           VALIDATE_JSCPD: false
           FIX_MARKDOWN_PRETTIER: true
           FIX_JSON_PRETTIER: true
+          FIX_YAML_PRETTIER: true
