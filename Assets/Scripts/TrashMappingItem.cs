@@ -28,7 +28,7 @@ public class TrashMappingItem
     public GameObject GetRandomPrefab()
     {
         if (trashPrefabs.Length == 0) return null;
-        
+
         var index = UnityEngine.Random.Range(0, trashPrefabs.Length);
         return trashPrefabs[index];
     }

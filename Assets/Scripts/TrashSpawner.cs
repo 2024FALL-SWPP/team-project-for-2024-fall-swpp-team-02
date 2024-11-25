@@ -6,10 +6,10 @@ public class TrashSpawner : MonoBehaviour
     private GameObject[] _trashes;
     [SerializeField] private Grid trashGrid;
     [SerializeField] private TrashMapping trashMapping;
-    
+
     private Tilemap _trashTilemap;
     private GridInformation _gridInformation;
-    
+
     /// <summary>
     /// Generates Trash at the given tilemap based position.
     /// </summary>
@@ -19,12 +19,12 @@ public class TrashSpawner : MonoBehaviour
         var tile = _trashTilemap.GetTile(tilePos);
         var tileObject = GetMatch(tile);
         if (tileObject == null) return;
-        
+
         var offset = Quaternion.Euler(90f, 0f, 0f) * _trashTilemap.cellSize / 2;
         var objectPos = _trashTilemap.CellToWorld(tilePos) + offset;
-        
+
         var trashObject = Instantiate(tileObject, objectPos, Quaternion.identity);
-        _gridInformation.SetPositionProperty(tilePos, "objectInstance", (Object) trashObject);
+        _gridInformation.SetPositionProperty(tilePos, "objectInstance", (Object)trashObject);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class TrashSpawner : MonoBehaviour
     public void InitialSpawn()
     {
         var markerPosEnumerator = _trashTilemap.cellBounds.allPositionsWithin;
-        
+
         foreach (var marker in markerPosEnumerator)
             Spawn(marker);
     }
@@ -47,7 +47,7 @@ public class TrashSpawner : MonoBehaviour
     {
         _trashTilemap = trashGrid.GetComponentInChildren<Tilemap>();
         _gridInformation = trashGrid.GetComponent<GridInformation>();
-        
+
         InitialSpawn();
         _trashTilemap.GetComponent<TilemapRenderer>().enabled = false;
     }

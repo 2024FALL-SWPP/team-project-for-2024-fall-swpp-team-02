@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public class PlayerBagController
 {
     private PlayerBag _playerBag;
-    
+
     public PlayerBagController(int bagSize)
     {
         _playerBag = new PlayerBag(bagSize);
