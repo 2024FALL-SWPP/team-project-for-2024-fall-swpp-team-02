@@ -36,6 +36,7 @@ public class ObstacleGenerator : MonoBehaviour
     private GameObject GetMatch(TileBase marker)
     {
         if (marker == null) return null;
+        
         foreach (var mapping in obstacleMappings)
             if (mapping.Match(marker)) return mapping.obstaclePrefab;
         
