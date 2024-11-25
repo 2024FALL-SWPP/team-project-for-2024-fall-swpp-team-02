@@ -25,6 +25,7 @@ jobs:
           # super-linter needs the full git history to get the
           # list of files that changed across commits
           fetch-depth: 0
+          token: ${{ secrets.SUPER_LINTER_TOKEN }}
 
       - name: Super-linter
         uses: super-linter/super-linter@v7.2.0 # x-release-please-version
@@ -50,4 +51,5 @@ jobs:
           commit_message: "chore: fix linting issues"
           commit_user_name: super-linter
           commit_user_email: super-linter@super-linter.dev
+          commit_author: super-linter <super-linter@super-linter.dev>
           skip_checkout: true
