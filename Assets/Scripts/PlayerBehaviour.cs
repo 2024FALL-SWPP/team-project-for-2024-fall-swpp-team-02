@@ -14,7 +14,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Tilemap _obstacleTilemap;
     private bool _isInCooldown;
-    private bool _isWalking;
+    private bool _isWalking = false;
     private Vector3 _targetPosition;
 
     private Animator _animator; 
@@ -114,7 +114,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         DecreaseLife();
 
+        // Reset target position to player's current position, prevents player moving to previous target upon respawn
         transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
+        _targetPosition = transform.position; 
+        _isWalking = false;
+        _animator.SetBool("isWalking", false);
 
         // If there's an obstacle on the respawn position, move to the nearest empty block
         int dx = 1;
