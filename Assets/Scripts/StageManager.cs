@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
-    private List<float> goalZList = new List<float>() { 24.5f, 24.5f, 24.5f }; //modify after making real level map
+    [SerializeField] private List<float> goalZList = new List<float>() { 24.5f, 24.5f, 24.5f }; //modify after making real level map
     public static StageManager Instance
     {
         get
