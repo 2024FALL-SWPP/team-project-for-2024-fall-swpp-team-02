@@ -114,11 +114,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         DecreaseLife();
 
-        // Reset target position to player's current position, prevents player moving to previous target upon respawn
         transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
-        _targetPosition = transform.position; 
-        _isWalking = false;
-        _animator.SetBool("isWalking", false);
 
         // If there's an obstacle on the respawn position, move to the nearest empty block
         int dx = 1;
@@ -128,5 +124,12 @@ public class PlayerBehaviour : MonoBehaviour
             if (dx > 0) dx = -dx - 1;
             else dx = -dx + 1;
         }
+
+        // Reset target position to player's respawned position, prevents player moving to previous target upon respawn
+        _targetPosition = transform.position; 
+
+        // Stop walking animation
+        _isWalking = false;
+        _animator.SetBool("isWalking", false);
     }
 }
