@@ -17978,7 +17978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distancePointer: {fileID: 1618712796}
-  camera: {fileID: 0}
+  camera: {fileID: 1464877205}
 --- !u!114 &1478830666
 MonoBehaviour:
   m_ObjectHideFlags: 0
