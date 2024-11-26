@@ -50,4 +50,19 @@ public class StageManager : MonoBehaviour
         int level = DataManager.Instance.GetActiveLevelData().level;
         return goalZList[level-1];
     }
+
+    public bool IsPaused()
+    {
+        return Time.timeScale == 0;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
 }
