@@ -5955,6 +5955,8 @@ MonoBehaviour:
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
   cooldown: 0.5
+  scoreUI: {fileID: 791139499}
+  batteryUI: {fileID: 1622840274}
   referenceSpeed: 0.5
 --- !u!114 &466761509
 MonoBehaviour:
@@ -28206,6 +28208,7 @@ GameObject:
   - component: {fileID: 2121581913}
   - component: {fileID: 2121581915}
   - component: {fileID: 2121581914}
+  - component: {fileID: 2121581916}
   m_Layer: 5
   m_Name: InventoryBackground
   m_TagString: Untagged
@@ -28277,6 +28280,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121581912}
   m_CullTransparentMesh: 1
+--- !u!114 &2121581916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121581912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955e85606a4b4fb0b955fb7c10d8dc42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySlots:
+  - {fileID: 1338600440}
+  - {fileID: 1297972291}
+  - {fileID: 2052140885}
+  - {fileID: 190274414}
+  - {fileID: 928426006}
+  - {fileID: 63344561}
 --- !u!1 &2122228539
 GameObject:
   m_ObjectHideFlags: 0
