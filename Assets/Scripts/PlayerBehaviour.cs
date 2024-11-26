@@ -7,7 +7,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid mapGrid;
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float cooldown = 0.5f;
-
+    
+    public ScoreUI scoreUI;
+    public BatteryUI batteryUI;
+    
     private int life = 3;
 
     private Tilemap _obstacleTilemap;
@@ -80,6 +83,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void DecreaseLife()
     {
         life--;
+        batteryUI.UpdateBattery(life);
         Debug.Log("Life: " + life);
 
         if (life <= 0)
@@ -93,6 +97,7 @@ public class PlayerBehaviour : MonoBehaviour
         float referenceTime = offsetZ / referenceSpeed;
         float playTime = Time.time - _startTime;
         score = (int)(referenceTime - playTime + 5 * trashCount);
+        scoreUI.UpdateScore(score);
     }
 
     private int CalculateFinalScore()
