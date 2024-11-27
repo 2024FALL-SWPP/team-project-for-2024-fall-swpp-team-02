@@ -8,6 +8,8 @@ public class TrashPicker : MonoBehaviour
     private PlayerBagController _bagController;
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
+    
+    private InventoryUI _inventoryUI;
 
     private void Start()
     {
@@ -15,6 +17,7 @@ public class TrashPicker : MonoBehaviour
         _gridInfo = trashGrid.GetComponent<GridInformation>();
 
         _bagController = new PlayerBagController(6);
+        _inventoryUI = FindObjectOfType<InventoryUI>();
     }
 
     private void Update()
@@ -30,6 +33,8 @@ public class TrashPicker : MonoBehaviour
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
         Destroy(trashObject);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
+        _inventoryUI.UpdateInventory(_bagController.GetTrashList());
+        
         if (ScoreModel.Instance != null)
         {
             ScoreModel.Instance.IncTrashPickupCount();
