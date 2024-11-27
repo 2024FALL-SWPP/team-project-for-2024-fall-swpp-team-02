@@ -18,6 +18,10 @@ public class StageManager : MonoBehaviour
         }
     }
 
+
+    public PlayerBagController bagController;
+
+
     void Awake()
     {
         if (instance != null) Destroy(instance);
@@ -27,7 +31,7 @@ public class StageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        bagController = new PlayerBagController(6);
     }
 
     // Update is called once per frame

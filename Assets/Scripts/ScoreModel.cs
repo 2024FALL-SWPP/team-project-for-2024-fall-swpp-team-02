@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScoreModel
 {
-    // ScoreUI scoreUI;
+    ScoreUI scoreUI;
     private float startTime;
     private float startZ;
     private float referenceSpeed;
@@ -13,11 +13,12 @@ public class ScoreModel
 
     public static ScoreModel Instance;
 
-    public ScoreModel(float startZ, float referenceSpeed)
+    public ScoreModel(float startZ, float referenceSpeed, ScoreUI scoreUI)
     {
         startTime = Time.time;
         this.startZ = startZ;
         this.referenceSpeed = referenceSpeed;
+        this.scoreUI = scoreUI;
     }
 
 
@@ -36,8 +37,7 @@ public class ScoreModel
         float referenceTime = offsetZ / referenceSpeed;
         float playTime = Time.time - startTime;
         int score = (int)(referenceTime - playTime + 5 * (trashPickupCount + trashDisposeCount - trashMissCount));
-        Debug.Log(score);
-        // scoreUI.UpdateScore(score);
+        scoreUI.UpdateScore(score);
     }
 
     public void IncTrashPickupCount()

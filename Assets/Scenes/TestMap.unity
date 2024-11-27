@@ -5952,8 +5952,8 @@ MonoBehaviour:
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
   cooldown: 0.5
-  scoreUI: {fileID: 0}
-  batteryUI: {fileID: 0}
+  scoreUI: {fileID: 791139499}
+  batteryUI: {fileID: 1622840274}
   moveSpeed: 2
   rotationSpeed: 10
   referenceSpeed: 0.5
@@ -7445,6 +7445,16 @@ Tilemap:
   m_GameObject: {fileID: 586305502}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: 7, y: 6, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 4, y: 7, z: 0}
     second:
       serializedVersion: 2
@@ -7531,7 +7541,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 765a9a7ff7e231d49b9acace99ae84ea, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 0c42540ed39726b46b063104d042f2b5, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: b3e5db6f2614d9d44aeb807785d13d84, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: b2e52e1a2409aad4da2fba4387f09a09, type: 2}
@@ -7544,10 +7554,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 8
+  - m_RefCount: 9
     m_Data: {fileID: 21300000, guid: 54670efc8ce4ea6418a698f2a947a720, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 8
+  - m_RefCount: 9
     m_Data:
       e00: 1
       e01: 0
@@ -7568,7 +7578,7 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 2
     m_Data: {r: 0.15566039, g: 0.22590983, b: 1, a: 1}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {r: 1, g: 0.15566039, b: 0.15566039, a: 1}
   - m_RefCount: 2
     m_Data: {r: 0.011263967, g: 1, b: 0, a: 1}
@@ -8038,6 +8048,8 @@ MonoBehaviour:
   playerRightKey: 100
   playerFrontKey: 119
   playerBackKey: 115
+  playerDisposeKey: 32
+  playerRotateKey: 9
 --- !u!1 &632651721
 GameObject:
   m_ObjectHideFlags: 0
@@ -28845,8 +28857,8 @@ MonoBehaviour:
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
   cooldown: 0.5
-  scoreUI: {fileID: 0}
-  batteryUI: {fileID: 0}
+  scoreUI: {fileID: 791139499}
+  batteryUI: {fileID: 1622840274}
   moveSpeed: 2
   rotationSpeed: 10
   referenceSpeed: 0.5

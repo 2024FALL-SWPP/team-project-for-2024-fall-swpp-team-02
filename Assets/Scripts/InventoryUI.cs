@@ -9,10 +9,13 @@ public class InventoryUI : MonoBehaviour
     private Dictionary<TrashType, Sprite> trashSprites;
     private const string BaseSpritePath = "Sprites/TrashEntries/";
 
+    public static InventoryUI Instance;
+
     private void Start()
     {
         InitializeTrashSprites();
         ClearInventory();
+        Instance = this;
     }
 
     private void InitializeTrashSprites()

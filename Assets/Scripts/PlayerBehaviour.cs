@@ -25,6 +25,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
+
+    private Direction direction;
+
     [SerializeField] private float referenceSpeed = 0.5f;
 
     private float goalZ;
@@ -37,7 +40,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
-        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed, scoreUI);
     }
 
     /// <summary>
@@ -87,7 +90,9 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
+
         if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
+        this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
         _isWalking = true;
@@ -129,6 +134,8 @@ public class PlayerBehaviour : MonoBehaviour
     public void IncreaseLife(int amount)
     {
         life += amount;
+        if (life > 3)
+            life = 3;
         batteryUI.UpdateBattery(life);
     }
 
@@ -153,5 +160,30 @@ public class PlayerBehaviour : MonoBehaviour
         // Stop walking animation
         _isWalking = false;
         _animator.SetBool("isWalking", false);
+    }
+
+    public void RotateBag()
+    {
+        StageManager.Instance.bagController.RotateBag();
+    }
+
+    public void DisposeTrash()
+    {
+        var trashType = StageManager.Instance.bagController.GetFirstTrashType();
+        if (trashType == TrashType.None) return;
+
+        var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
+        var frontObstacle = _obstacleTilemap.GetTile(frontPos);
+
+        Debug.Log("frontObstacle: " + frontObstacle);
+
+        if (frontObstacle)
+        {
+            Debug.Log("frontObstacle.name: " + frontObstacle.name + ", TrashColor: " + TrashInfo.TrashColor(trashType));
+            if (frontObstacle.name.StartsWith(TrashInfo.TrashColor(trashType)))
+            {
+                StageManager.Instance.bagController.RemoveTrash();
+            }
+        }
     }
 }
