@@ -17,7 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool _isWalking = false;
     private Vector3 _targetPosition;
 
-    private Animator _animator; 
+    private Animator _animator;
 
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
@@ -26,7 +26,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
-        _targetPosition = transform.position; 
+        _targetPosition = transform.position;
     }
 
     /// <summary>
@@ -65,11 +65,11 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
-        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return; 
+        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
 
         _targetPosition = transform.position + direction.Value;
-        _isWalking = true; 
-        _animator.SetBool("isWalking", true); 
+        _isWalking = true;
+        _animator.SetBool("isWalking", true);
 
         _isInCooldown = true;
         StartCoroutine(nameof(CooldownRoutine));
@@ -126,7 +126,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         // Reset target position to player's respawned position, prevents player moving to previous target upon respawn
-        _targetPosition = transform.position; 
+        _targetPosition = transform.position;
 
         // Stop walking animation
         _isWalking = false;
