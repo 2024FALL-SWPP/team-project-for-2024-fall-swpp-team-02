@@ -16,6 +16,8 @@ public class PlayerBehaviour : MonoBehaviour
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
 
+    private Direction direction;
+
 
     /// <summary>
     /// Moves player 1 block to the given position.
@@ -26,6 +28,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
         if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;  // Condition check
+
+        this.direction = direction;
 
         UpdatePos(direction);
         _isInCooldown = true;
@@ -74,6 +78,26 @@ public class PlayerBehaviour : MonoBehaviour
             transform.position += new Vector3(dx, 0, 0);
             if (dx > 0) dx = -dx - 1;
             else dx = -dx + 1;
+        }
+    }
+
+    public void RotateBag()
+    {
+        StageManager.Instance.bagController.RotateBag();
+    }
+
+    public void DisposeTrash()
+    {
+        var trashType = StageManager.Instance.bagController.GetFirstTrashType();
+        if (trashType == TrashType.None) return;
+
+        var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
+        var frontObstacle = _obstacleTilemap.GetTile(frontPos);
+
+        if (frontObstacle)
+        {
+            if (frontObstacle.name.ToLower().StartsWith(TrashInfo.TrashColor(trashType)))
+                StageManager.Instance.bagController.RemoveTrash();
         }
     }
 }

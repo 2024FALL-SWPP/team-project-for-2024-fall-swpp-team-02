@@ -31,4 +31,16 @@ public class PlayerBag
     }
 
     public List<TrashType> GetTrashList() => _bag.ToList();
+
+    public TrashType RemoveTrash()
+    {
+        if (_bag.TryPeek(out var firstTrash)) return TrashType.None;
+        return _bag.Dequeue();
+    }
+
+    public void RotateBag()
+    {
+        var firstTrash = _bag.Dequeue();
+        _bag.Enqueue(firstTrash);
+    }
 }
