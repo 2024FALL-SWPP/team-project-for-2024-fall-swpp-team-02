@@ -7,6 +7,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid mapGrid;
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float cooldown = 0.5f;
+
+    public ScoreUI scoreUI;
+    public BatteryUI batteryUI;
+
     [SerializeField] private float moveSpeed = 2.0f;
     [SerializeField] private float rotationSpeed = 10.0f;
 
@@ -120,13 +124,12 @@ public class PlayerBehaviour : MonoBehaviour
     private void DecreaseLife()
     {
         life--;
+        batteryUI.UpdateBattery(life);
         Debug.Log("Life: " + life);
 
         if (life <= 0)
             StageManager.Instance.GameOver();
     }
-
-
 
     public void Respawn()
     {
