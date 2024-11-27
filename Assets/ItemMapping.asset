@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca28bbe822a600d49b0c70aff37a7c3f, type: 3}
   m_Name: ItemMapping
   m_EditorClassIdentifier: 
+  ItemMappings:
+  - markerTile: {fileID: 11400000, guid: a512ba98e4e177943af7edd569bc2f22, type: 2}
+    itemPrefab: {fileID: 8442164045550583437, guid: 4c4165bef2249844c9989d7511ef7d2e, type: 3}
