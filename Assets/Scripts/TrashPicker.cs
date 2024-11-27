@@ -7,11 +7,13 @@ public class TrashPicker : MonoBehaviour
 
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
+    private PlayerBehaviour _playerBehaviour;
 
     private void Start()
     {
         _trashTilemap = trashGrid.GetComponentInChildren<Tilemap>();
         _gridInfo = trashGrid.GetComponent<GridInformation>();
+        _playerBehaviour = FindObjectOfType<PlayerBehaviour>();
     }
 
     private void Update()
@@ -23,10 +25,11 @@ public class TrashPicker : MonoBehaviour
 
         var trashInfo = trashObject.GetComponent<TrashInfo>();
 
+        _playerBehaviour.TriggerPickUpAnimation();
         StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
 
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
-        Destroy(trashObject);
+        Destroy(trashObject, 0.15f);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
     }
 

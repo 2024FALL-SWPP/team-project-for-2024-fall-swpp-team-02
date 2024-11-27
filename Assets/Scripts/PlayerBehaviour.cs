@@ -105,13 +105,12 @@ public class PlayerBehaviour : MonoBehaviour
     // Temporary function set the trigger "triggerThrow" and "triggerPickUp"
     public void TriggerThrowAnimation()
     {
-        _animator.SetTrigger("triggerThrow");
+        _animator.Play("InLevel.Throw");
 
     }
     public void TriggerPickUpAnimation()
     {
-        _animator.SetTrigger("triggerPickUp");
-
+        _animator.Play("InLevel.Pick Up");
     }
 
     private IEnumerator CooldownRoutine()
@@ -180,6 +179,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (frontObstacle.name.StartsWith(TrashInfo.TrashColor(trashType)))
             {
                 StageManager.Instance.bagController.RemoveTrash();
+                TriggerThrowAnimation();
             }
         }
     }
