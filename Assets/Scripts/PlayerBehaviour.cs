@@ -109,6 +109,13 @@ public class PlayerBehaviour : MonoBehaviour
         if (life <= 0)
             StageManager.Instance.GameOver();
     }
+    
+    // Should be removed after moving life field out from PlayerBehaviour
+    public void IncreaseLife(int amount)
+    {
+        life += amount;
+        Debug.Log("Life: " + life);
+    }
 
     public void Respawn()
     {
