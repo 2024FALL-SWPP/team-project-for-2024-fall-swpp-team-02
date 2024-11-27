@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
-    [SerializeField] private List<float> goalZList = new List<float>() { 24.5f, 24.5f, 24.5f }; //modify after making real level map
+    [SerializeField] private float goalZ;
     public static StageManager Instance
     {
         get
@@ -19,8 +19,8 @@ public class StageManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        if (instance != null) Destroy(instance);
+        instance = this;
     }
 
     // Start is called before the first frame update
@@ -47,7 +47,6 @@ public class StageManager : MonoBehaviour
 
     public float GetGoalZ()
     {
-        int level = DataManager.Instance.GetActiveLevelData().level;
-        return goalZList[level-1];
+        return goalZ;
     }
 }

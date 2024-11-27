@@ -17,7 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
     private const float _respawnX = 7.5f;
 
     private float goalZ;
-    
+
 
 
     /// <summary>
@@ -54,8 +54,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
-        // goalZ = StageManager.Instance.GetGoalZ();
-        goalZ = 24.5f; //for test map
+        goalZ = StageManager.Instance.GetGoalZ();
     }
 
     private void DecreaseLife()
