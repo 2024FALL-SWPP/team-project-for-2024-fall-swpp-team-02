@@ -18,12 +18,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float referenceSpeed = 0.5f; 
 
     private float _goalZ;
-    private float _startZ;
-    private float _startTime;
-
-    private int trashCount = 0;
-    private int totalTrashes = 0;
-    private int score = 0;
+    
     
     /// <summary>
     /// Moves player 1 block to the given position.
@@ -50,7 +45,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (transform.position.z >= _goalZ)
         {
             int level = DataManager.Instance.GetActiveLevelData().level;
-            int score = CalculateFinalScore();
+            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
             ActiveLevelData levelClearData = new ActiveLevelData(level, score);
             DataManager.Instance.SetActiveLevelData(levelClearData);
             StageManager.Instance.GameClear();
@@ -66,15 +61,15 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
-        // goalZ = StageManager.Instance.GetGoalZ();
-        _goalZ = 24.5f; //for test map
-        _startZ = transform.position.z;
-        _startTime = Time.time;
+        float _startZ = transform.position.z;
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
+        
+        _goalZ = StageManager.Instance.GetGoalZ();
     }
 
     private void Update()
     {
-        UpdateScore();
+        ScoreModel.Instance.UpdateScore(transform.position.z);
     }
 
     private void DecreaseLife()
@@ -85,25 +80,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (life <= 0)
             StageManager.Instance.GameOver();
     }
-
-    private void UpdateScore()
-    {
-        float currentZ = transform.position.z;
-        float offsetZ = currentZ - _startZ;
-        float referenceTime = offsetZ / referenceSpeed;
-        float playTime = Time.time - _startTime;
-        score = (int)(referenceTime - playTime + 5 * trashCount);
-    }
-
-    private int CalculateFinalScore()
-    {
-        float currentZ = transform.position.z;
-        float offsetZ = currentZ - _startZ;
-        float referenceTime = offsetZ / referenceSpeed;
-        float playTime = Time.time - _startTime;
-        float clampedTimeScore = Mathf.Clamp(referenceTime - referenceTime, -20.0f, 20.0f);
-        return (int)(clampedTimeScore + 5 * (trashCount - totalTrashes) + 100);
-    }
+    
+    
 
     public void Respawn()
     {
