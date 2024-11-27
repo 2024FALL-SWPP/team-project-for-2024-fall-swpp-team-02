@@ -8,4 +8,9 @@ public class ActiveLevelData
         this.level = level;
         this.score = 0;
     }
+    public ActiveLevelData(int level, int score)
+    {
+        this.level = level;
+        this.score = score;
+    }
 }

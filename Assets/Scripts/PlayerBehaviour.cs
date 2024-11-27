@@ -21,12 +21,19 @@ public class PlayerBehaviour : MonoBehaviour
 
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
+    [SerializeField] private float referenceSpeed = 0.5f;
+
+    private float goalZ;
 
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
+
+        goalZ = StageManager.Instance.GetGoalZ();
+        float _startZ = transform.position.z;
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
     }
 
     /// <summary>
@@ -54,6 +61,17 @@ public class PlayerBehaviour : MonoBehaviour
                 _isWalking = false;
                 _animator.SetBool("isWalking", false);
             }
+        }
+
+        ScoreModel.Instance.UpdateScore(transform.position.z);
+
+        if (transform.position.z >= goalZ)
+        {
+            int level = DataManager.Instance.GetActiveLevelData().level;
+            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
+            DataManager.Instance.SetActiveLevelData(levelClearData);
+            StageManager.Instance.GameClear();
         }
     }
 
@@ -86,20 +104,13 @@ public class PlayerBehaviour : MonoBehaviour
         _animator.SetTrigger("triggerPickUp");
 
     }
-    /// <summary>
-    /// Updates player's position.
-    /// </summary>
-    /// <param name="direction">Direction which player moves to.</param>
-    public void UpdatePos(Direction direction)
-    {
-        transform.position += direction.Value;
-    }
 
     private IEnumerator CooldownRoutine()
     {
         yield return new WaitForSeconds(cooldown);
         _isInCooldown = false;
     }
+
 
     private void DecreaseLife()
     {
@@ -116,7 +127,7 @@ public class PlayerBehaviour : MonoBehaviour
         life += amount;
         Debug.Log("Life: " + life);
     }
-
+    
     public void Respawn()
     {
         DecreaseLife();
