@@ -22,11 +22,14 @@ public class PlayerBehaviour : MonoBehaviour
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
 
+    private float goalZ;
+
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
+        goalZ = StageManager.Instance.GetGoalZ();
     }
 
     /// <summary>
@@ -93,6 +96,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void UpdatePos(Direction direction)
     {
         transform.position += direction.Value;
+        if (transform.position.z >= goalZ) StageManager.Instance.GameClear();
     }
 
     private IEnumerator CooldownRoutine()
