@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 public class ItemMapping : ScriptableObject
 {
     public ItemMappingItem[] ItemMappings;
-    
+
     public GameObject MarkerToPrefab(TileBase marker)
     {
         foreach (var mapping in ItemMappings)

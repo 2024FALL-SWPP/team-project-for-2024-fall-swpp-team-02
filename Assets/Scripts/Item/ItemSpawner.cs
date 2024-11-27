@@ -5,10 +5,10 @@ public class ItemSpawner : MonoBehaviour
 {
     [SerializeField] private Grid itemGrid;
     [SerializeField] private ItemMapping itemMapping;
-    
+
     private Tilemap _itemTilemap;
     private GridInformation _itemGridInfo;
-    
+
     public void Spawn(Vector3Int tilePos)
     {
         var tile = _itemTilemap.GetTile(tilePos);
@@ -17,9 +17,9 @@ public class ItemSpawner : MonoBehaviour
 
         var offset = Quaternion.Euler(90f, 0f, 0f) * _itemTilemap.cellSize / 2;
         var objectPos = _itemTilemap.CellToWorld(tilePos) + offset;
-        
+
         var itemObject = Instantiate(tileObject, objectPos, Quaternion.identity);
-        _itemGridInfo.SetPositionProperty(tilePos, "itemObject", (Object) itemObject);
+        _itemGridInfo.SetPositionProperty(tilePos, "itemObject", (Object)itemObject);
     }
 
     private GameObject GetMatch(TileBase tile)

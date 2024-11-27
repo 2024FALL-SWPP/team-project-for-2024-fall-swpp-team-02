@@ -18,7 +18,7 @@ public class ItemPicker : MonoBehaviour
     {
         return _itemTilemap.HasTile(_itemTilemap.WorldToCell(transform.position));
     }
-    
+
     private void Start()
     {
         _itemTilemap = itemGrid.GetComponentInChildren<Tilemap>();
@@ -28,13 +28,13 @@ public class ItemPicker : MonoBehaviour
     private void Update()
     {
         if (!CheckIfItemExists()) return;
-        
+
         var itemObject = FindItemAtCurrentPos();
         if (itemObject == null) return;
-        
+
         var itemBehaviour = itemObject.GetComponent<IItemBehaviour>();
         itemBehaviour.OnPickup();
-        
+
         var itemPosOnTilemap = _itemTilemap.WorldToCell(itemObject.transform.position);
         Destroy(itemObject);
         _itemTilemap.SetTile(itemPosOnTilemap, null);
