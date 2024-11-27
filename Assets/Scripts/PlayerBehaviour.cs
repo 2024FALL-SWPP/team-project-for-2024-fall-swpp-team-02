@@ -19,12 +19,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Animator _animator;
 
-    private const float _respawnZAdd = 7.0f;
-    private const float _respawnX = 7.5f;
+    private const float _respawnZAdd = 9.0f;
+    private const float _respawnX = 8.5f;
     [SerializeField] private float referenceSpeed = 0.5f;
 
     private float goalZ;
-
+    
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
