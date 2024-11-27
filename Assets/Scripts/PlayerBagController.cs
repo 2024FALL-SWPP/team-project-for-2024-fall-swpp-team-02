@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
 
 public class PlayerBagController
 {
@@ -22,5 +24,16 @@ public class PlayerBagController
     public void AddTrash(TrashType trashType)
     {
         _playerBag.AddTrash(trashType);
+    }
+
+    public bool RemoveTrash()
+    {
+        if (_playerBag.RemoveTrash() != TrashType.None) return true;
+        return false;
+    }
+
+    public void RotateBag()
+    {
+        _playerBag.RotateBag();
     }
 }
