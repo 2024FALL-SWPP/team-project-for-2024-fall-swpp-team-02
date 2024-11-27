@@ -12,7 +12,7 @@ public class SelectLevel : MonoBehaviour
     public Button level3Button;
 
     public Button goBackButton;
-    
+
     public TextMeshProUGUI level1Text;
     public TextMeshProUGUI level2Text;
     public TextMeshProUGUI level3Text;
@@ -58,13 +58,13 @@ public class SelectLevel : MonoBehaviour
                 if (i < level3Data.stars) level3Stars[i].enabled = true;
             }
         }
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private LevelData LoadLevelData(int level)

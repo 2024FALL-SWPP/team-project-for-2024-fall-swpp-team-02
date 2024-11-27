@@ -11,23 +11,74 @@ public class PlayerBehaviour : MonoBehaviour
     public ScoreUI scoreUI;
     public BatteryUI batteryUI;
     
+    [SerializeField] private float moveSpeed = 2.0f;
+    [SerializeField] private float rotationSpeed = 10.0f;
+
     private int life = 3;
 
     private Tilemap _obstacleTilemap;
     private bool _isInCooldown;
+    private bool _isWalking = false;
+    private Vector3 _targetPosition;
+
+    private Animator _animator;
 
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
-    [SerializeField] private float referenceSpeed = 0.5f; 
+    [SerializeField] private float referenceSpeed = 0.5f;
 
-    private float _goalZ;
-    private float _startZ;
-    private float _startTime;
+    private float goalZ;
 
-    private int trashCount = 0;
-    private int totalTrashes = 0;
-    private int score = 0;
-    
+    private void Start()
+    {
+        _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
+        _animator = GetComponent<Animator>();
+        _targetPosition = transform.position;
+
+        goalZ = StageManager.Instance.GetGoalZ();
+        float _startZ = transform.position.z;
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
+    }
+
+    /// <summary>
+    /// Handles the player's movement and rotation toward the target position.
+    /// Manages the player's walking animation state.
+    /// </summary>
+    private void Update()
+    {
+        if (_isWalking)
+        {
+            // Move the player toward the target position
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
+
+            // Rotate the player toward the direction of movement
+            Vector3 directionToTarget = _targetPosition - transform.position;
+            if (directionToTarget != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+
+            // Stop walking when reaching the target position
+            if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
+            {
+                _isWalking = false;
+                _animator.SetBool("isWalking", false);
+            }
+        }
+
+        ScoreModel.Instance.UpdateScore(transform.position.z);
+
+        if (transform.position.z >= goalZ)
+        {
+            int level = DataManager.Instance.GetActiveLevelData().level;
+            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
+            DataManager.Instance.SetActiveLevelData(levelClearData);
+            StageManager.Instance.GameClear();
+        }
+    }
+
     /// <summary>
     /// Moves player 1 block to the given position.
     /// If an obstacle is in front of the player, the command doesn't work.
@@ -36,28 +87,26 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
-        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;  // Condition check
+        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
 
-        UpdatePos(direction);
+        _targetPosition = transform.position + direction.Value;
+        _isWalking = true;
+        _animator.SetBool("isWalking", true);
+
         _isInCooldown = true;
         StartCoroutine(nameof(CooldownRoutine));
     }
 
-    /// <summary>
-    /// Updates player's position.
-    /// </summary>
-    /// <param name="direction">Direction which player moves to.</param>
-    public void UpdatePos(Direction direction)
+    // Temporary function set the trigger "triggerThrow" and "triggerPickUp"
+    public void TriggerThrowAnimation()
     {
-        transform.position += direction.Value;
-        if (transform.position.z >= _goalZ)
-        {
-            int level = DataManager.Instance.GetActiveLevelData().level;
-            int score = CalculateFinalScore();
-            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
-            DataManager.Instance.SetActiveLevelData(levelClearData);
-            StageManager.Instance.GameClear();
-        }
+        _animator.SetTrigger("triggerThrow");
+
+    }
+    public void TriggerPickUpAnimation()
+    {
+        _animator.SetTrigger("triggerPickUp");
+
     }
 
     private IEnumerator CooldownRoutine()
@@ -66,19 +115,6 @@ public class PlayerBehaviour : MonoBehaviour
         _isInCooldown = false;
     }
 
-    private void Start()
-    {
-        _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
-        // goalZ = StageManager.Instance.GetGoalZ();
-        _goalZ = 24.5f; //for test map
-        _startZ = transform.position.z;
-        _startTime = Time.time;
-    }
-
-    private void Update()
-    {
-        UpdateScore();
-    }
 
     private void DecreaseLife()
     {
@@ -87,28 +123,9 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Life: " + life);
 
         if (life <= 0)
-            StageManager.Instance.GameOver();
+            StageManager.Instance.GameOver()
     }
 
-    private void UpdateScore()
-    {
-        float currentZ = transform.position.z;
-        float offsetZ = currentZ - _startZ;
-        float referenceTime = offsetZ / referenceSpeed;
-        float playTime = Time.time - _startTime;
-        score = (int)(referenceTime - playTime + 5 * trashCount);
-        scoreUI.UpdateScore(score);
-    }
-
-    private int CalculateFinalScore()
-    {
-        float currentZ = transform.position.z;
-        float offsetZ = currentZ - _startZ;
-        float referenceTime = offsetZ / referenceSpeed;
-        float playTime = Time.time - _startTime;
-        float clampedTimeScore = Mathf.Clamp(referenceTime - referenceTime, -20.0f, 20.0f);
-        return (int)(clampedTimeScore + 5 * (trashCount - totalTrashes) + 100);
-    }
 
     public void Respawn()
     {
@@ -124,5 +141,12 @@ public class PlayerBehaviour : MonoBehaviour
             if (dx > 0) dx = -dx - 1;
             else dx = -dx + 1;
         }
+
+        // Reset target position to player's respawned position, prevents player moving to previous target upon respawn
+        _targetPosition = transform.position;
+
+        // Stop walking animation
+        _isWalking = false;
+        _animator.SetBool("isWalking", false);
     }
 }
