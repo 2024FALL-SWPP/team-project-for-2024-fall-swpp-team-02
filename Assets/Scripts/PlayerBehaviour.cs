@@ -24,11 +24,19 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Direction direction;
 
+    [SerializeField] private float referenceSpeed = 0.5f;
+
+    private float goalZ;
+
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
+
+        goalZ = StageManager.Instance.GetGoalZ();
+        float _startZ = transform.position.z;
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
     }
 
     /// <summary>
@@ -57,6 +65,17 @@ public class PlayerBehaviour : MonoBehaviour
                 _animator.SetBool("isWalking", false);
             }
         }
+
+        ScoreModel.Instance.UpdateScore(transform.position.z);
+
+        if (transform.position.z >= goalZ)
+        {
+            int level = DataManager.Instance.GetActiveLevelData().level;
+            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
+            DataManager.Instance.SetActiveLevelData(levelClearData);
+            StageManager.Instance.GameClear();
+        }
     }
 
     /// <summary>
@@ -74,7 +93,7 @@ public class PlayerBehaviour : MonoBehaviour
         _targetPosition = transform.position + direction.Value;
         _isWalking = true;
         _animator.SetBool("isWalking", true);
-
+        
         _isInCooldown = true;
         StartCoroutine(nameof(CooldownRoutine));
     }
@@ -90,20 +109,13 @@ public class PlayerBehaviour : MonoBehaviour
         _animator.SetTrigger("triggerPickUp");
 
     }
-    /// <summary>
-    /// Updates player's position.
-    /// </summary>
-    /// <param name="direction">Direction which player moves to.</param>
-    public void UpdatePos(Direction direction)
-    {
-        transform.position += direction.Value;
-    }
 
     private IEnumerator CooldownRoutine()
     {
         yield return new WaitForSeconds(cooldown);
         _isInCooldown = false;
     }
+
 
     private void DecreaseLife()
     {
@@ -113,6 +125,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (life <= 0)
             StageManager.Instance.GameOver();
     }
+
+
 
     public void Respawn()
     {
