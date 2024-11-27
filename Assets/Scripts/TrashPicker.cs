@@ -8,14 +8,10 @@ public class TrashPicker : MonoBehaviour
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
 
-    private InventoryUI _inventoryUI;
-
     private void Start()
     {
         _trashTilemap = trashGrid.GetComponentInChildren<Tilemap>();
         _gridInfo = trashGrid.GetComponent<GridInformation>();
-
-        _inventoryUI = FindObjectOfType<InventoryUI>();
     }
 
     private void Update()
@@ -32,7 +28,6 @@ public class TrashPicker : MonoBehaviour
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
         Destroy(trashObject);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
-        _inventoryUI.UpdateInventory(StageManager.Instance.bagController.GetTrashList());
 
         if (ScoreModel.Instance != null)
         {
