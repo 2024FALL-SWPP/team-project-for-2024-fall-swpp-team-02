@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUI: MonoBehaviour
+public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private List<Image> inventorySlots;
     private Dictionary<TrashType, Sprite> trashSprites;
@@ -14,7 +14,7 @@ public class InventoryUI: MonoBehaviour
         InitializeTrashSprites();
         ClearInventory();
     }
-    
+
     private void InitializeTrashSprites()
     {
         trashSprites = new Dictionary<TrashType, Sprite>
@@ -29,12 +29,12 @@ public class InventoryUI: MonoBehaviour
             { TrashType.Banana, LoadSprite("Banana") }
         };
     }
-    
+
     private Sprite LoadSprite(string spriteName)
     {
         return Resources.Load<Sprite>($"{BaseSpritePath}{spriteName}");
     }
-    
+
     public void UpdateInventory(List<TrashType> bag)
     {
         for (int i = 0; i < inventorySlots.Count; i++)
@@ -51,8 +51,8 @@ public class InventoryUI: MonoBehaviour
 
             if (trashSprites.ContainsKey(trash))
             {
-                inventorySlots[index].sprite = trashSprites[trash]; 
-                inventorySlots[index].enabled = true; 
+                inventorySlots[index].sprite = trashSprites[trash];
+                inventorySlots[index].enabled = true;
             }
 
             index++;
@@ -64,7 +64,7 @@ public class InventoryUI: MonoBehaviour
         for (int i = 0; i < inventorySlots.Count; i++)
         {
             inventorySlots[i].sprite = null;
-            inventorySlots[i].enabled = false; 
+            inventorySlots[i].enabled = false;
         }
     }
 }

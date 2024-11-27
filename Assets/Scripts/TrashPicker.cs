@@ -8,7 +8,7 @@ public class TrashPicker : MonoBehaviour
     private PlayerBagController _bagController;
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
-    
+
     private InventoryUI _inventoryUI;
 
     private void Start()
@@ -34,7 +34,7 @@ public class TrashPicker : MonoBehaviour
         Destroy(trashObject);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
         _inventoryUI.UpdateInventory(_bagController.GetTrashList());
-        
+
         if (ScoreModel.Instance != null)
         {
             ScoreModel.Instance.IncTrashPickupCount();

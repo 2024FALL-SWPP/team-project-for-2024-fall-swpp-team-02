@@ -7,10 +7,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid mapGrid;
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float cooldown = 0.5f;
-    
+
     public ScoreUI scoreUI;
     public BatteryUI batteryUI;
-    
+
     [SerializeField] private float moveSpeed = 2.0f;
     [SerializeField] private float rotationSpeed = 10.0f;
 

@@ -13,8 +13,8 @@ public class DistanceBarUI : MonoBehaviour
     private float levelRangeZ;
     private float pointerRangeX = 492f;
     private Vector2 pointerStartPosition;
-    private float cameraOffsetZ = 5f; 
-    
+    private float cameraOffsetZ = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
