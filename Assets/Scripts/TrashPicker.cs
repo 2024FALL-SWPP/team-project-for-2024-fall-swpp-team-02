@@ -34,7 +34,7 @@ public class TrashPicker : MonoBehaviour
         {
             ScoreModel.Instance.IncTrashPickupCount();
         }
-        
+
     }
 
     private GameObject FindTrashAtCurrentPos()
