@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b5aeff1216346c1855556c68b9df00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalZ: 0
+  goalZ: 24.5
 --- !u!4 &102563352
 Transform:
   m_ObjectHideFlags: 0
@@ -5580,6 +5580,7 @@ MonoBehaviour:
   cooldown: 0.5
   moveSpeed: 2
   rotationSpeed: 10
+  referenceSpeed: 0.5
 --- !u!114 &466761509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23483,23 +23484,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trashGrid: {fileID: 2048045676}
   trashMapping: {fileID: 11400000, guid: c6844e95e016d374c9c1664efff4c6fa, type: 2}
-  trashMappings:
-  - markerTile: {fileID: 11400000, guid: b2e52e1a2409aad4da2fba4387f09a09, type: 2}
-    trashPrefabs:
-    - {fileID: 796257223966090764, guid: 2c3d49b69fc8f7842a825b84e27519b0, type: 3}
-    - {fileID: 438391252229260795, guid: 0f74cf45fb5965b4da43a134e0fa0c44, type: 3}
-  - markerTile: {fileID: 11400000, guid: 0c42540ed39726b46b063104d042f2b5, type: 2}
-    trashPrefabs:
-    - {fileID: 406528671913698738, guid: 916f455adc8cf414fa4fd606d0163d19, type: 3}
-  - markerTile: {fileID: 11400000, guid: b3e5db6f2614d9d44aeb807785d13d84, type: 2}
-    trashPrefabs:
-    - {fileID: 243947998393874717, guid: f1bbb369b830ac549930c10548904463, type: 3}
-    - {fileID: 1868390095917243043, guid: 86d22b2b2f30f194fa102cdd1e6d5f86, type: 3}
-  - markerTile: {fileID: 11400000, guid: 765a9a7ff7e231d49b9acace99ae84ea, type: 2}
-    trashPrefabs:
-    - {fileID: 2379069296815962343, guid: cfbe2ef680cb38a4aaedd3d210392349, type: 3}
-    - {fileID: 4673554988342177545, guid: 61b4924217e7eb543ab39f13fb34fb68, type: 3}
-    - {fileID: 5382996660327333013, guid: 977488ddf2a8ebc4780c8e2fdae40ebf, type: 3}
 --- !u!1 &1921616599
 GameObject:
   m_ObjectHideFlags: 0
@@ -27263,6 +27247,7 @@ MonoBehaviour:
   cooldown: 0.5
   moveSpeed: 2
   rotationSpeed: 10
+  referenceSpeed: 0.5
 --- !u!1001 &6977969051665533655
 PrefabInstance:
   m_ObjectHideFlags: 0
