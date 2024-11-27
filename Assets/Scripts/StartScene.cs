@@ -10,12 +10,12 @@ public class StartScene : MonoBehaviour
     public Button powerUpButton;
     void Start()
     {
-        
+
     }
-    
+
     void Update()
     {
-        
+
     }
 
     public void SelectLevel()

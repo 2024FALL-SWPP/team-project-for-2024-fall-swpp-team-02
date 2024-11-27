@@ -8,10 +8,10 @@ public class DataManager : MonoBehaviour
 {
 
     public static DataManager Instance { get; private set; }
-    private List<LevelData> levelDataList  = new List<LevelData>();
+    private List<LevelData> levelDataList = new List<LevelData>();
     private CoinData coinData;
     private ActiveLevelData activeLevelData;
-    
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -48,12 +48,12 @@ public class DataManager : MonoBehaviour
 
     public LevelData GetLevelData(int level)
     {
-        return levelDataList[level-1];
+        return levelDataList[level - 1];
     }
 
     public void SetLevelData(int level, LevelData levelData)
     {
-        levelDataList[level-1] = levelData;
+        levelDataList[level - 1] = levelData;
         string path = Application.persistentDataPath + $"{Path.PathSeparator}level{level}.json";
         string json = JsonUtility.ToJson(levelData);
         File.WriteAllText(path, json);
@@ -85,7 +85,7 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(coinData);
         File.WriteAllText(path, json);
     }
-    
+
     public void SetActiveLevelData(ActiveLevelData activeLevelData)
     {
         this.activeLevelData = activeLevelData;
