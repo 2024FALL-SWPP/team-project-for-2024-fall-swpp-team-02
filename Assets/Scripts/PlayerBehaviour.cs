@@ -123,7 +123,7 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Life: " + life);
 
         if (life <= 0)
-            StageManager.Instance.GameOver()
+            StageManager.Instance.GameOver();
     }
 
 
