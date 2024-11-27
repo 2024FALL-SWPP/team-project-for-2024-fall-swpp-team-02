@@ -19,8 +19,8 @@ public class ScoreModel
         this.startZ = startZ;
         this.referenceSpeed = referenceSpeed;
     }
-    
-    
+
+
     public int CalculateFinalScore(float currentZ)
     {
         float offsetZ = currentZ - startZ;
@@ -54,5 +54,5 @@ public class ScoreModel
     {
         ++trashMissCount;
     }
-    
+
 }

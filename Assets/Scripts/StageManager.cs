@@ -8,7 +8,7 @@ public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
     [SerializeField] private float goalZ;
-    
+
     public static StageManager Instance
     {
         get

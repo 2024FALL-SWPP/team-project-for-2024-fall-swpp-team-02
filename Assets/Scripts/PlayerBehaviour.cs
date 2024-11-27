@@ -21,16 +21,16 @@ public class PlayerBehaviour : MonoBehaviour
 
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
-    [SerializeField] private float referenceSpeed = 0.5f; 
+    [SerializeField] private float referenceSpeed = 0.5f;
 
-    private float goalZ;    
-    
+    private float goalZ;
+
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
-        
+
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
         ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
@@ -62,9 +62,9 @@ public class PlayerBehaviour : MonoBehaviour
                 _animator.SetBool("isWalking", false);
             }
         }
-        
+
         ScoreModel.Instance.UpdateScore(transform.position.z);
-        
+
         if (transform.position.z >= goalZ)
         {
             int level = DataManager.Instance.GetActiveLevelData().level;
@@ -120,8 +120,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (life <= 0)
             StageManager.Instance.GameOver();
     }
-    
-    
+
+
 
     public void Respawn()
     {
