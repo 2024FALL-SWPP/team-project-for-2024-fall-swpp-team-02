@@ -74,7 +74,7 @@ public class PlayerBehaviour : MonoBehaviour
         _targetPosition = transform.position + direction.Value;
         _isWalking = true;
         _animator.SetBool("isWalking", true);
-        
+
         _isInCooldown = true;
         StartCoroutine(nameof(CooldownRoutine));
     }
