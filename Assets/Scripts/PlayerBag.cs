@@ -23,23 +23,23 @@ public class PlayerBag
     {
         var overflow = _bag.Count >= _size ? _bag.Dequeue() : TrashType.None;
         _bag.Enqueue(trash);
+        ScoreModel.Instance.IncTrashPickupCount();
         UpdateUI();
         return overflow;
     }
 
     public TrashType CheckTrash()
     {
-        var result = _bag.TryPeek(out var trash) ? trash : TrashType.None;
-        UpdateUI();
-        return result;
+        return _bag.TryPeek(out var trash) ? trash : TrashType.None;
     }
 
     public List<TrashType> GetTrashList() => _bag.ToList();
 
     public TrashType RemoveTrash()
     {
-        if (_bag.TryPeek(out var firstTrash)) return TrashType.None;
+        if (!_bag.TryPeek(out var firstTrash)) return TrashType.None;
         var trash = _bag.Dequeue();
+        ScoreModel.Instance.IncTrashDisposeCount();
         UpdateUI();
         return trash;
     }

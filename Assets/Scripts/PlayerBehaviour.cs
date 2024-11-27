@@ -167,10 +167,15 @@ public class PlayerBehaviour : MonoBehaviour
         var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
         var frontObstacle = _obstacleTilemap.GetTile(frontPos);
 
+        Debug.Log("frontObstacle: " + frontObstacle);
+
         if (frontObstacle)
         {
-            if (frontObstacle.name.ToLower().StartsWith(TrashInfo.TrashColor(trashType)))
+            Debug.Log("frontObstacle.name: " + frontObstacle.name + ", TrashColor: " + TrashInfo.TrashColor(trashType));
+            if (frontObstacle.name.StartsWith(TrashInfo.TrashColor(trashType)))
+            {
                 StageManager.Instance.bagController.RemoveTrash();
+            }
         }
     }
 }

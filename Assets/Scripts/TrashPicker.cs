@@ -28,12 +28,6 @@ public class TrashPicker : MonoBehaviour
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
         Destroy(trashObject);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
-
-        if (ScoreModel.Instance != null)
-        {
-            ScoreModel.Instance.IncTrashPickupCount();
-        }
-
     }
 
     private GameObject FindTrashAtCurrentPos()
