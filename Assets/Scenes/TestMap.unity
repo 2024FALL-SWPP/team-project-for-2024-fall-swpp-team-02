@@ -5952,8 +5952,8 @@ MonoBehaviour:
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
   cooldown: 0.5
-  scoreUI: {fileID: 791139499}
-  batteryUI: {fileID: 1622840274}
+  scoreUI: {fileID: 0}
+  batteryUI: {fileID: 0}
   moveSpeed: 2
   rotationSpeed: 10
   referenceSpeed: 0.5
@@ -7250,7 +7250,7 @@ RectTransform:
   - {fileID: 1478830664}
   - {fileID: 1622840273}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -27806,7 +27806,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2093382567
 GameObject:
@@ -28845,9 +28845,24 @@ MonoBehaviour:
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
   cooldown: 0.5
+  scoreUI: {fileID: 0}
+  batteryUI: {fileID: 0}
   moveSpeed: 2
   rotationSpeed: 10
   referenceSpeed: 0.5
+--- !u!114 &4485965279153198611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4485965279153198607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8599bfff3f3c5be49bb9eed097b41799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trashGrid: {fileID: 2048045676}
 --- !u!1001 &6977969051665533655
 PrefabInstance:
   m_ObjectHideFlags: 0
