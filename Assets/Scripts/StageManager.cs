@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
     private static StageManager instance;
+    [SerializeField] private float goalZ;
     public static StageManager Instance
     {
         get
@@ -17,8 +19,8 @@ public class StageManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        if (instance != null) Destroy(instance);
+        instance = this;
     }
 
     // Start is called before the first frame update
@@ -36,5 +38,15 @@ public class StageManager : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene("LevelOverScene");
+    }
+
+    public void GameClear()
+    {
+        SceneManager.LoadScene("LevelClearScene");
+    }
+
+    public float GetGoalZ()
+    {
+        return goalZ;
     }
 }

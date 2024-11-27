@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 79d5a776d8c7c4e7ca1e1d25358b0d9d
+guid: e2894aba817164f3293ace9b65032a8d
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Road_Asphalt_Baked
+    second: {fileID: 2800000, guid: b45856878ff5547888f5ed6cc08ffc50, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
