@@ -40,7 +40,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
-        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed, scoreUI);
     }
 
     /// <summary>
