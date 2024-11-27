@@ -127,7 +127,7 @@ public class PlayerBehaviour : MonoBehaviour
         life += amount;
         Debug.Log("Life: " + life);
     }
-    
+
     public void Respawn()
     {
         DecreaseLife();
