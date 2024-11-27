@@ -1,0 +1,55 @@
+---
+name: Lint
+
+on: # yamllint disable-line rule:truthy
+  push: null
+  pull_request: null
+
+permissions: {}
+
+jobs:
+  build:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+          token: ${{ secrets.SUPER_LINTER_TOKEN }}
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v7.2.0 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIX_CSHARP: true
+          VALIDATE_JSCPD: false
+          FIX_MARKDOWN: true
+          FIX_MARKDOWN_PRETTIER: true
+          FIX_JSON_PRETTIER: true
+          FIX_YAML_PRETTIER: true
+      - name: Commit and push linting fixes
+        # Run only on:
+        # - Pull requests
+        # - Not on the default branch
+        if: >
+          github.event_name == 'pull_request' &&
+          github.ref_name != github.event.repository.default_branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          # branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
+          commit_message: "chore: fix linting issues"
+          commit_user_name: super-linter
+          commit_user_email: super-linter@super-linter.dev
+          commit_author: super-linter <super-linter@super-linter.dev>
+          skip_checkout: true
