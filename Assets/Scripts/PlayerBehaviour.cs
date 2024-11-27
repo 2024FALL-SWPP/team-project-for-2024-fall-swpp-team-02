@@ -21,6 +21,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     private const float _respawnZAdd = 7.0f;
     private const float _respawnX = 7.5f;
+
+    private Direction direction;
+
     [SerializeField] private float referenceSpeed = 0.5f;
 
     private float goalZ;
@@ -83,12 +86,14 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
+
         if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
+        this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
         _isWalking = true;
         _animator.SetBool("isWalking", true);
-
+        
         _isInCooldown = true;
         StartCoroutine(nameof(CooldownRoutine));
     }
@@ -144,5 +149,25 @@ public class PlayerBehaviour : MonoBehaviour
         // Stop walking animation
         _isWalking = false;
         _animator.SetBool("isWalking", false);
+    }
+
+    public void RotateBag()
+    {
+        StageManager.Instance.bagController.RotateBag();
+    }
+
+    public void DisposeTrash()
+    {
+        var trashType = StageManager.Instance.bagController.GetFirstTrashType();
+        if (trashType == TrashType.None) return;
+
+        var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
+        var frontObstacle = _obstacleTilemap.GetTile(frontPos);
+
+        if (frontObstacle)
+        {
+            if (frontObstacle.name.ToLower().StartsWith(TrashInfo.TrashColor(trashType)))
+                StageManager.Instance.bagController.RemoveTrash();
+        }
     }
 }
