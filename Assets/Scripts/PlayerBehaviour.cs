@@ -125,10 +125,18 @@ public class PlayerBehaviour : MonoBehaviour
     {
         life--;
         batteryUI.UpdateBattery(life);
-        Debug.Log("Life: " + life);
 
         if (life <= 0)
             StageManager.Instance.GameOver();
+    }
+
+    // Should be removed after moving life field out from PlayerBehaviour
+    public void IncreaseLife(int amount)
+    {
+        life += amount;
+        if (life > 3)
+            life = 3;
+        batteryUI.UpdateBattery(life);
     }
 
     public void Respawn()
