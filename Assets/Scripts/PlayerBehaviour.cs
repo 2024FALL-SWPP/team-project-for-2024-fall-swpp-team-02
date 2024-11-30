@@ -6,7 +6,8 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private Grid mapGrid;
     [SerializeField] private Grid obstacleGrid;
-    [SerializeField] private float cooldown = 0.5f;
+    [SerializeField] private float moveCooldown = 0.5f;
+    [SerializeField] private float rotateCooldown = 0.3f;
     [SerializeField] private float moveSpeed = 2.0f;
     [SerializeField] private float rotationSpeed = 10.0f;
 
@@ -16,6 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool _isInCooldown;
     private bool _isWalking = false;
     private Vector3 _targetPosition;
+    private Vector3 _targetDirection;
 
     private Animator _animator;
 
@@ -30,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
+        _targetDirection = Vector3.zero;
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
@@ -47,20 +50,22 @@ public class PlayerBehaviour : MonoBehaviour
             // Move the player toward the target position
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
 
-            // Rotate the player toward the direction of movement
-            Vector3 directionToTarget = _targetPosition - transform.position;
-            if (directionToTarget != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
-
             // Stop walking when reaching the target position
             if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
             {
+                _targetDirection = Vector3.zero;
                 _isWalking = false;
                 _animator.SetBool("isWalking", false);
+                
+                QuantizePosition();
             }
+        }
+        
+        // Rotate the player toward the direction of movement
+        if (_targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         ScoreModel.Instance.UpdateScore(transform.position.z);
@@ -86,11 +91,21 @@ public class PlayerBehaviour : MonoBehaviour
         if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
 
         _targetPosition = transform.position + direction.Value;
+        _targetDirection = direction.Value;
         _isWalking = true;
         _animator.SetBool("isWalking", true);
 
         _isInCooldown = true;
-        StartCoroutine(nameof(CooldownRoutine));
+        StartCoroutine(nameof(MoveCooldownRoutine));
+    }
+    
+    public void Rotate(Direction direction)
+    {
+        if (_isInCooldown) return;
+        
+        _targetDirection = direction.Value;
+        _isInCooldown = true;
+        StartCoroutine(nameof(RotateCooldownRoutine));
     }
 
     // Temporary function set the trigger "triggerThrow" and "triggerPickUp"
@@ -105,12 +120,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     }
 
-    private IEnumerator CooldownRoutine()
+    private IEnumerator MoveCooldownRoutine()
     {
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(moveCooldown);
         _isInCooldown = false;
     }
-
+    
+    private IEnumerator RotateCooldownRoutine()
+    {
+        yield return new WaitForSeconds(rotateCooldown);
+        _isInCooldown = false;
+        _targetDirection = Vector3.zero;
+    }
 
     private void DecreaseLife()
     {
@@ -120,8 +141,6 @@ public class PlayerBehaviour : MonoBehaviour
         if (life <= 0)
             StageManager.Instance.GameOver();
     }
-
-
 
     public void Respawn()
     {
@@ -144,5 +163,18 @@ public class PlayerBehaviour : MonoBehaviour
         // Stop walking animation
         _isWalking = false;
         _animator.SetBool("isWalking", false);
+    }
+
+    private void QuantizePosition()
+    {
+        var x = Mathf.Round(transform.position.x - 0.5f) + 0.5f;
+        var z = Mathf.Round(transform.position.z - 0.5f) + 0.5f;
+        
+        transform.position = new Vector3(x, transform.position.y, z);
+    }
+
+    private void QuantizeRotation()
+    {
+        
     }
 }
