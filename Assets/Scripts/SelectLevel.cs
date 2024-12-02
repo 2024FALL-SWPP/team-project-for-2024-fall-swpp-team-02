@@ -78,19 +78,19 @@ public class SelectLevel : MonoBehaviour
     {
         ActiveLevelData activeLevelData = new ActiveLevelData(1);
         DataManager.Instance.SetActiveLevelData(activeLevelData);
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("LevelOneScene");
     }
     public void SelectLevel2()
     {
         ActiveLevelData activeLevelData = new ActiveLevelData(2);
         DataManager.Instance.SetActiveLevelData(activeLevelData);
-        SceneManager.LoadScene("Level2");
+        SceneManager.LoadScene("LevelTwoScene");
     }
     public void SelectLevel3()
     {
         ActiveLevelData activeLevelData = new ActiveLevelData(3);
         DataManager.Instance.SetActiveLevelData(activeLevelData);
-        SceneManager.LoadScene("Level3");
+        SceneManager.LoadScene("LevelThreeScene");
     }
 
     public void GoBack()
