@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TrashInfo : MonoBehaviour
@@ -7,18 +6,17 @@ public class TrashInfo : MonoBehaviour
 
     public static string TrashColor(TrashType trashType)
     {
-        return trashType switch
+        switch (trashType)
         {
-            TrashType.PaperGrouped => "Yellow",
-            TrashType.PaperSingle1 => "Yellow",
-            TrashType.PaperSingle2 => "Yellow",
-            TrashType.CanHorizontal => "Red",
-            TrashType.CanVertical => "Red",
-            TrashType.PetBottleHorizontal => "Blue",
-            TrashType.PetBottleVertical => "Blue",
-            TrashType.Banana => "Green",
-            TrashType.None => "None",
-            _ => throw new UnexpectedEnumValueException<TrashType>(trashType),
-        };
+            case TrashType.PaperGrouped: return "Yellow";
+            case TrashType.PaperSingle1: return "Yellow";
+            case TrashType.PaperSingle2: return "Yellow";
+            case TrashType.CanHorizontal: return "Red";
+            case TrashType.CanVertical: return "Red";
+            case TrashType.PetBottleHorizontal: return "Blue";
+            case TrashType.PetBottleVertical: return "Blue";
+            case TrashType.Banana: return "Green";
+        }
+        return "";
     }
 }
