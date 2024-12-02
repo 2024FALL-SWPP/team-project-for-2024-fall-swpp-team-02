@@ -12,18 +12,11 @@ public class PlayerBag
         _size = bagSize;
     }
 
-    public TrashType GetFirstTrash()
-    {
-        var result = _bag.TryDequeue(out var trash) ? trash : TrashType.None;
-        UpdateUI();
-        return result;
-    }
-
     public TrashType AddTrash(TrashType trash)
     {
         var overflow = _bag.Count >= _size ? _bag.Dequeue() : TrashType.None;
         _bag.Enqueue(trash);
-        ScoreModel.Instance.IncTrashPickupCount();
+        ScoreModel.Instance?.IncTrashPickupCount();
         UpdateUI();
         return overflow;
     }
@@ -39,7 +32,7 @@ public class PlayerBag
     {
         if (!_bag.TryPeek(out var firstTrash)) return TrashType.None;
         var trash = _bag.Dequeue();
-        ScoreModel.Instance.IncTrashDisposeCount();
+        ScoreModel.Instance?.IncTrashDisposeCount();
         UpdateUI();
         return trash;
     }
@@ -53,6 +46,7 @@ public class PlayerBag
 
     private void UpdateUI()
     {
+        if (InventoryUI.Instance == null) return;
         InventoryUI.Instance.UpdateInventory(StageManager.Instance.bagController.GetTrashList());
     }
 }
