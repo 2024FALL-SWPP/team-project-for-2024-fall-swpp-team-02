@@ -2,7 +2,12 @@ name: Unity Test
 
 on: [push, pull_request]
 
-permissions: write-all
+permissions:
+  actions: write
+  checks: write
+  contents: read
+  pull-requests: read
+  statuses: write
 
 jobs:
   build:
