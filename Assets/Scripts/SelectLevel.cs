@@ -20,6 +20,8 @@ public class SelectLevel : MonoBehaviour
     public List<Image> level1Stars;
     public List<Image> level2Stars;
     public List<Image> level3Stars;
+
+    public TextMeshProUGUI coinText;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +60,7 @@ public class SelectLevel : MonoBehaviour
                 if (i < level3Data.stars) level3Stars[i].enabled = true;
             }
         }
-
+        coinText.text = "$ " + DataManager.Instance.GetCoinData().coins;
     }
 
     // Update is called once per frame
