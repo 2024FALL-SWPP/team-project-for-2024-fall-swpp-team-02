@@ -8,14 +8,14 @@ public class TrashInfo : MonoBehaviour
     {
         switch (trashType)
         {
-            case TrashType.PaperGrouped: return "Blue";
-            case TrashType.PaperSingle1: return "White";
-            case TrashType.PaperSingle2: return "White";
+            case TrashType.PaperGrouped: return "Yellow";
+            case TrashType.PaperSingle1: return "Yellow";
+            case TrashType.PaperSingle2: return "Yellow";
             case TrashType.CanHorizontal: return "Red";
             case TrashType.CanVertical: return "Red";
-            case TrashType.PetBottleHorizontal: return "Green";
-            case TrashType.PetBottleVertical: return "Green";
-            case TrashType.Banana: return "Yellow";
+            case TrashType.PetBottleHorizontal: return "Blue";
+            case TrashType.PetBottleVertical: return "Blue";
+            case TrashType.Banana: return "Green";
         }
         return "";
     }
