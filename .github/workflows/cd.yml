@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/main-build
   workflow_dispatch:
 
 permissions:
