@@ -8,6 +8,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float moveCooldown = 0.5f;
     [SerializeField] private float rotateCooldown = 0.3f;
+
+    public ScoreUI scoreUI;
+    public BatteryUI batteryUI;
+
     [SerializeField] private float moveSpeed = 2.0f;
     [SerializeField] private float rotationSpeed = 10.0f;
 
@@ -21,12 +25,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Animator _animator;
 
-    private const float _respawnZAdd = 9.0f;
-    private const float _respawnX = 8.5f;
+    private const float _respawnZAdd = 7.0f;
+    private const float _respawnX = 7.5f;
+
+    private Direction direction;
+
     [SerializeField] private float referenceSpeed = 0.5f;
 
     private float goalZ;
-    
+
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
@@ -36,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
-        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed);
+        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed, scoreUI);
     }
 
     /// <summary>
@@ -60,7 +67,7 @@ public class PlayerBehaviour : MonoBehaviour
                 QuantizePosition();
             }
         }
-        
+
         // Rotate the player toward the direction of movement
         if (_targetDirection != Vector3.zero)
         {
@@ -72,12 +79,17 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (transform.position.z >= goalZ)
         {
-            int level = DataManager.Instance.GetActiveLevelData().level;
-            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
-            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
-            DataManager.Instance.SetActiveLevelData(levelClearData);
-            StageManager.Instance.GameClear();
+            ClearGame();
         }
+    }
+
+    private void ClearGame()
+    {
+        int level = DataManager.Instance.GetActiveLevelData().level;
+        int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+        ActiveLevelData levelClearData = new ActiveLevelData(level, score);
+        DataManager.Instance.SetActiveLevelData(levelClearData);
+        StageManager.Instance.GameClear();
     }
 
     /// <summary>
@@ -88,7 +100,9 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
+
         if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
+        this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
         _targetDirection = direction.Value;
@@ -111,13 +125,12 @@ public class PlayerBehaviour : MonoBehaviour
     // Temporary function set the trigger "triggerThrow" and "triggerPickUp"
     public void TriggerThrowAnimation()
     {
-        _animator.SetTrigger("triggerThrow");
+        _animator.Play("InLevel.Throw");
 
     }
     public void TriggerPickUpAnimation()
     {
-        _animator.SetTrigger("triggerPickUp");
-
+        _animator.Play("InLevel.Pick Up");
     }
 
     private IEnumerator MoveCooldownRoutine()
@@ -136,10 +149,19 @@ public class PlayerBehaviour : MonoBehaviour
     private void DecreaseLife()
     {
         life--;
-        Debug.Log("Life: " + life);
+        batteryUI.UpdateBattery(life);
 
         if (life <= 0)
             StageManager.Instance.GameOver();
+    }
+
+    // Should be removed after moving life field out from PlayerBehaviour
+    public void IncreaseLife(int amount)
+    {
+        life += amount;
+        if (life > 3)
+            life = 3;
+        batteryUI.UpdateBattery(life);
     }
 
     public void Respawn()
@@ -147,6 +169,12 @@ public class PlayerBehaviour : MonoBehaviour
         DecreaseLife();
 
         transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
+        // If respawn position is past goal, clear game
+        if (transform.position.z >= goalZ)
+        {
+            ClearGame();
+            return;
+        }
 
         // If there's an obstacle on the respawn position, move to the nearest empty block
         int dx = 1;
@@ -175,6 +203,29 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void QuantizeRotation()
     {
+    
+    }
         
+    public void RotateBag()
+    {
+        StageManager.Instance.bagController.RotateBag();
+    }
+
+    public void DisposeTrash()
+    {
+        var trashType = StageManager.Instance.bagController.GetFirstTrashType();
+        if (trashType == TrashType.None) return;
+
+        var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
+        var frontObstacle = _obstacleTilemap.GetTile(frontPos);
+
+        if (frontObstacle)
+        {
+            if (frontObstacle.name.StartsWith(TrashInfo.TrashColor(trashType)))
+            {
+                StageManager.Instance.bagController.RemoveTrash();
+                TriggerThrowAnimation();
+            }
+        }
     }
 }

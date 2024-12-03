@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +18,10 @@ public class StageManager : MonoBehaviour
         }
     }
 
+
+    public PlayerBagController bagController;
+
+
     void Awake()
     {
         if (instance != null) Destroy(instance);
@@ -27,7 +31,7 @@ public class StageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        bagController = new PlayerBagController(6);
     }
 
     // Update is called once per frame
@@ -49,5 +53,20 @@ public class StageManager : MonoBehaviour
     public float GetGoalZ()
     {
         return goalZ;
+    }
+
+    public bool IsPaused()
+    {
+        return Time.timeScale == 0;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
     }
 }

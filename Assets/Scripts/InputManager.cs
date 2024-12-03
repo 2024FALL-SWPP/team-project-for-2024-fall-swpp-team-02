@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private KeyCode playerRightKey = KeyCode.D;
     [SerializeField] private KeyCode playerFrontKey = KeyCode.W;
     [SerializeField] private KeyCode playerBackKey = KeyCode.S;
+    [SerializeField] private KeyCode playerDisposeKey = KeyCode.Space;
+    [SerializeField] private KeyCode playerRotateKey = KeyCode.Tab;
 
     private void Update()
     {
@@ -35,5 +37,7 @@ public class InputManager : MonoBehaviour
             player.Move(Direction.Back);
             player.Rotate(Direction.Back);
         }
+        if (Input.GetKey(playerDisposeKey)) player.DisposeTrash();
+        if (Input.GetKeyDown(playerRotateKey)) player.RotateBag();
     }
 }

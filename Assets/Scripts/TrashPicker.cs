@@ -5,16 +5,15 @@ public class TrashPicker : MonoBehaviour
 {
     [SerializeField] private Grid trashGrid;
 
-    private PlayerBagController _bagController;
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
+    private PlayerBehaviour _playerBehaviour;
 
     private void Start()
     {
         _trashTilemap = trashGrid.GetComponentInChildren<Tilemap>();
         _gridInfo = trashGrid.GetComponent<GridInformation>();
-
-        _bagController = new PlayerBagController(6);
+        _playerBehaviour = FindObjectOfType<PlayerBehaviour>();
     }
 
     private void Update()
@@ -25,16 +24,13 @@ public class TrashPicker : MonoBehaviour
         if (trashObject == null) return;
 
         var trashInfo = trashObject.GetComponent<TrashInfo>();
-        _bagController.AddTrash(trashInfo.trashType);
+
+        _playerBehaviour.TriggerPickUpAnimation();
+        StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
 
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
-        Destroy(trashObject);
+        Destroy(trashObject, 0.15f);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
-        if (ScoreModel.Instance != null)
-        {
-            ScoreModel.Instance.IncTrashPickupCount();
-        }
-
     }
 
     private GameObject FindTrashAtCurrentPos()
