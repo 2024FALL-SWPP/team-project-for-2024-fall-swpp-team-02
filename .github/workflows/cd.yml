@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/main-build
   workflow_dispatch:
 
 permissions:
@@ -37,7 +36,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
   build:
     needs: test
-    name: Test and Build Unity Project
+    name: Build Unity Project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
