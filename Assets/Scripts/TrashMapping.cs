@@ -15,6 +15,17 @@ public class TrashMapping : ScriptableObject
         return null;
     }
 
+    public GameObject SubtypeToPrefab(TrashType type)
+    {
+        if (type == TrashType.None) return null;
+        foreach (var item in items)
+        {
+            var prefab = item.GetObject(type);
+            if (prefab != null) return prefab;
+        }
+        return null;
+    }
+
     public GameObject MarkerToPrefab(TileBase marker)
     {
         if (marker == null) return null;

@@ -21,6 +21,18 @@ public class TrashMappingItem
             );
     }
 
+    public GameObject GetObject(TrashType type)
+    {
+        foreach (var prefab in trashPrefabs)
+        {
+            if (prefab.GetComponent<TrashInfo>().trashType == type)
+            {
+                return prefab;
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// Gets random trash prefab. Returns null if there's no prefab in the mapping.
     /// </summary>

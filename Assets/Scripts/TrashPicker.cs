@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -26,11 +28,10 @@ public class TrashPicker : MonoBehaviour
         var trashInfo = trashObject.GetComponent<TrashInfo>();
 
         _playerBehaviour.TriggerPickUpAnimation();
-        StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
-
+        var poppedTrash = StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
-        Destroy(trashObject, 0.15f);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
+        StartCoroutine(ReplaceTrash(trashPosOnTilemap, trashObject, poppedTrash));
     }
 
     private GameObject FindTrashAtCurrentPos()
@@ -43,5 +44,19 @@ public class TrashPicker : MonoBehaviour
     private bool CheckIfTrashExists()
     {
         return _trashTilemap.HasTile(_trashTilemap.WorldToCell(transform.position));
+    }
+
+    private IEnumerator ReplaceTrash(Vector3Int trashPosOnTilemap, GameObject trashObject, TrashType trashType)
+    {
+        yield return new WaitForSeconds(0.15f); // Add a delay before placing the trash
+        Destroy(trashObject);
+        if (trashType == TrashType.None)
+        {
+            _gridInfo.SetPositionProperty(trashPosOnTilemap, "objectInstance", (Object)null);
+        }
+        else
+        {
+            FindObjectOfType<TrashSpawner>().Spawn(trashPosOnTilemap, trashType);
+        }
     }
 }
