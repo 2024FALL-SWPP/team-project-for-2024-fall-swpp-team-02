@@ -8,7 +8,9 @@
         "Unity.2D.Tilemap.Extras"
     ],
     "includePlatforms": [
-        "Editor"
+        "Editor",
+        "macOSStandalone",
+        "WindowsStandalone64"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

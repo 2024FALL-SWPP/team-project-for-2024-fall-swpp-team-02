@@ -19,7 +19,7 @@ public class DistanceBarUI : MonoBehaviour
     void Start()
     {
         levelStartPositionZ = camera.transform.position.z + cameraOffsetZ;
-        levelEndPositionZ = 24.0f - cameraOffsetZ;
+        levelEndPositionZ = StageManager.Instance.GetGoalZ() - cameraOffsetZ;
         levelRangeZ = levelEndPositionZ - levelStartPositionZ;
         pointerStartPosition = distancePointer.rectTransform.anchoredPosition;
     }

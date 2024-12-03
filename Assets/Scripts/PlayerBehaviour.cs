@@ -74,12 +74,17 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (transform.position.z >= goalZ)
         {
-            int level = DataManager.Instance.GetActiveLevelData().level;
-            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
-            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
-            DataManager.Instance.SetActiveLevelData(levelClearData);
-            StageManager.Instance.GameClear();
+            ClearGame();
         }
+    }
+
+    private void ClearGame()
+    {
+        int level = DataManager.Instance.GetActiveLevelData().level;
+        int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+        ActiveLevelData levelClearData = new ActiveLevelData(level, score);
+        DataManager.Instance.SetActiveLevelData(levelClearData);
+        StageManager.Instance.GameClear();
     }
 
     /// <summary>
@@ -143,6 +148,12 @@ public class PlayerBehaviour : MonoBehaviour
         DecreaseLife();
 
         transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
+        // If respawn position is past goal, clear game
+        if (transform.position.z >= goalZ)
+        {
+            ClearGame();
+            return;
+        }
 
         // If there's an obstacle on the respawn position, move to the nearest empty block
         int dx = 1;
