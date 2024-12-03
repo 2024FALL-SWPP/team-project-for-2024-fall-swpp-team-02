@@ -26,11 +26,16 @@ public class DataManager : MonoBehaviour
         LoadCoinData();
     }
 
+    private string GetLevelDataPath(int level)
+    {
+        return Path.Join(Application.persistentDataPath, $"level{level}.json");
+    }
+
     private void LoadLevelData()
     {
         for (int i = 1; i <= 3; i++)
         {
-            string path = Application.persistentDataPath + $"{Path.PathSeparator}level{i}.json";
+            string path = GetLevelDataPath(i);
             LevelData levelData;
             if (File.Exists(path))
             {
@@ -54,14 +59,18 @@ public class DataManager : MonoBehaviour
     public void SetLevelData(int level, LevelData levelData)
     {
         levelDataList[level - 1] = levelData;
-        string path = Application.persistentDataPath + $"{Path.PathSeparator}level{level}.json";
+        string path = GetLevelDataPath(level);
         string json = JsonUtility.ToJson(levelData);
         File.WriteAllText(path, json);
     }
 
+    private string GetCoinDataPath()
+    {
+        return Path.Join(Application.persistentDataPath, "coins.json");
+    }
     private void LoadCoinData()
     {
-        string path = Application.persistentDataPath + $"{Path.PathSeparator}coins.json";
+        string path = GetCoinDataPath();
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
