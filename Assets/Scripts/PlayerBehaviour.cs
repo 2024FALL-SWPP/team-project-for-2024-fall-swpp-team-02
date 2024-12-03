@@ -96,7 +96,12 @@ public class PlayerBehaviour : MonoBehaviour
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
 
-        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
+        if (_isInCooldown) return;
+        if (_obstacleTilemap.HasTile(cellPos))
+        {
+            AudioManager.Instance.PlaySFX("MotionFail");
+            return;
+        }
         this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
@@ -132,6 +137,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (life <= 0)
             StageManager.Instance.GameOver();
+
+        AudioManager.Instance.PlaySFX("PlayerHurt");
     }
 
     // Should be removed after moving life field out from PlayerBehaviour
@@ -141,6 +148,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (life > 3)
             life = 3;
         batteryUI.UpdateBattery(life);
+
+        AudioManager.Instance.PlaySFX("PlayerRestoreLife");
     }
 
     public void Respawn()
@@ -175,6 +184,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void RotateBag()
     {
         StageManager.Instance.bagController.RotateBag();
+        AudioManager.Instance.PlaySFX("BagRotate");
     }
 
     public void DisposeTrash()
@@ -191,7 +201,11 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 StageManager.Instance.bagController.RemoveTrash();
                 TriggerThrowAnimation();
+                AudioManager.Instance.PlaySFX("TrashDispose");
+                return;
             }
         }
+
+        AudioManager.Instance.PlaySFX("MotionFail");
     }
 }
