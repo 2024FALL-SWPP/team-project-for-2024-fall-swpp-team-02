@@ -27,7 +27,7 @@ public class ObstacleGenerator : MonoBehaviour
             var offset = Quaternion.Euler(90f, 0f, 0f) * obstacleTilemap.cellSize / 2;
             var objectPos = obstacleTilemap.CellToWorld(markerPos) + offset;
 
-            Instantiate(tileObject, objectPos, Quaternion.identity);
+            Instantiate(tileObject, objectPos, tileObject.transform.rotation);
         }
 
         obstacleTilemap.GetComponent<TilemapRenderer>().enabled = false;
