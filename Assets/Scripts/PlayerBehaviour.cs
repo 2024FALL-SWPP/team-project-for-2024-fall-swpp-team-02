@@ -60,6 +60,7 @@ public class PlayerBehaviour : MonoBehaviour
             // Stop walking when reaching the target position
             if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
             {
+                QuantizeRotation();
                 _targetDirection = Vector3.zero;
                 _isWalking = false;
                 _animator.SetBool("isWalking", false);
@@ -102,6 +103,7 @@ public class PlayerBehaviour : MonoBehaviour
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
 
         if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
+        _isInCooldown = true;
         this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
@@ -109,7 +111,6 @@ public class PlayerBehaviour : MonoBehaviour
         _isWalking = true;
         _animator.SetBool("isWalking", true);
 
-        _isInCooldown = true;
         StartCoroutine(nameof(MoveCooldownRoutine));
     }
 
@@ -117,8 +118,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (_isInCooldown) return;
 
-        _targetDirection = direction.Value;
         _isInCooldown = true;
+        _targetDirection = direction.Value;
+
         StartCoroutine(nameof(RotateCooldownRoutine));
     }
 
@@ -142,8 +144,9 @@ public class PlayerBehaviour : MonoBehaviour
     private IEnumerator RotateCooldownRoutine()
     {
         yield return new WaitForSeconds(rotateCooldown);
-        _isInCooldown = false;
+        QuantizeRotation();
         _targetDirection = Vector3.zero;
+        _isInCooldown = false;
     }
 
     private void DecreaseLife()
@@ -203,7 +206,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void QuantizeRotation()
     {
-
+        if (_targetDirection == Vector3.zero) return;
+        transform.rotation = Quaternion.LookRotation(_targetDirection);
     }
 
     public void RotateBag()
