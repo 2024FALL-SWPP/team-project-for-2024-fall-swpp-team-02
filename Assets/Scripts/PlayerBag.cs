@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,6 +43,11 @@ public class PlayerBag
         var firstTrash = _bag.Dequeue();
         _bag.Enqueue(firstTrash);
         UpdateUI();
+    }
+
+    internal bool IsBagFull()
+    {
+        return _bag.Count >= _size;
     }
 
     private void UpdateUI()
