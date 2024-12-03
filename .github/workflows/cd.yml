@@ -7,9 +7,37 @@ on:
       - feature/main-build
   workflow_dispatch:
 
+permissions:
+  actions: write
+  checks: write
+  contents: read
+  pull-requests: read
+  statuses: write
+  pages: write
+  id-token: write
+
 jobs:
+  test:
+    name: Unity Tests
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v4
+        with:
+          unityVersion: 2021.3.42f1
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
   build:
-    name: Build Unity Project
+    needs: test
+    name: Test and Build Unity Project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,31 +47,26 @@ jobs:
         uses: game-ci/unity-builder@v4
         with:
           unityVersion: 2021.3.42f1
-          targetPlatform: WebGL       # WebGL 빌드
+          targetPlatform: WebGL
         env:
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
-      # 3. 빌드 결과를 Pages artifact로 업로드
       - name: Upload Pages Artifact
-        id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/WebGL
 
   # Deploy job
   deploy:
-    # build job에 의존
     needs: build
     runs-on: ubuntu-latest
 
-    # Pages 배포를 위한 권한 설정
     permissions:
-      pages: write      # Pages에 배포
-      id-token: write   # 배포 출처 검증
+      pages: write
+      id-token: write
 
-    # GitHub Pages 환경으로 배포
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
