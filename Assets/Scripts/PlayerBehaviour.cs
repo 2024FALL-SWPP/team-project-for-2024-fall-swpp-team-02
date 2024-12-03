@@ -119,6 +119,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (_isInCooldown) return;
 
         _isInCooldown = true;
+        this.direction = direction;
         _targetDirection = direction.Value;
 
         StartCoroutine(nameof(RotateCooldownRoutine));
