@@ -22,7 +22,6 @@ public class TrashInfo : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TrashInfo OnTriggerEnter " + other.gameObject.name);
         if (other.gameObject.CompareTag("CameraBoundary"))
         {
             ScoreModel.Instance.IncTrashMissCount();
