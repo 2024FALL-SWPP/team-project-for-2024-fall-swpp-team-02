@@ -90,7 +90,7 @@ public class DataManager : MonoBehaviour
     public void SetCoinData(CoinData coinData)
     {
         this.coinData = coinData;
-        string path = Application.persistentDataPath + $"{Path.PathSeparator}coins.json";
+        string path = GetCoinDataPath();
         string json = JsonUtility.ToJson(coinData);
         File.WriteAllText(path, json);
     }
