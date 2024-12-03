@@ -63,7 +63,7 @@ public class PlayerBehaviour : MonoBehaviour
                 _targetDirection = Vector3.zero;
                 _isWalking = false;
                 _animator.SetBool("isWalking", false);
-                
+
                 QuantizePosition();
             }
         }
@@ -112,11 +112,11 @@ public class PlayerBehaviour : MonoBehaviour
         _isInCooldown = true;
         StartCoroutine(nameof(MoveCooldownRoutine));
     }
-    
+
     public void Rotate(Direction direction)
     {
         if (_isInCooldown) return;
-        
+
         _targetDirection = direction.Value;
         _isInCooldown = true;
         StartCoroutine(nameof(RotateCooldownRoutine));
@@ -138,7 +138,7 @@ public class PlayerBehaviour : MonoBehaviour
         yield return new WaitForSeconds(moveCooldown);
         _isInCooldown = false;
     }
-    
+
     private IEnumerator RotateCooldownRoutine()
     {
         yield return new WaitForSeconds(rotateCooldown);
@@ -197,15 +197,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         var x = Mathf.Round(transform.position.x - 0.5f) + 0.5f;
         var z = Mathf.Round(transform.position.z - 0.5f) + 0.5f;
-        
+
         transform.position = new Vector3(x, transform.position.y, z);
     }
 
     private void QuantizeRotation()
     {
-    
+
     }
-        
+
     public void RotateBag()
     {
         StageManager.Instance.bagController.RotateBag();
