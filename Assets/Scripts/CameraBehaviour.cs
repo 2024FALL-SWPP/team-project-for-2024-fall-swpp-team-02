@@ -13,7 +13,7 @@ public class CameraBehaviour : MonoBehaviour
     public float minOffset = -2.0f;
 
 
-    private Vector3 offset = new Vector3(10.0f, 5.0f, -6.0f);
+    [SerializeField] private Vector3 offset = new Vector3(10.0f, 7.0f, -5.0f);
 
     private float currentPos = 0.0f;
 

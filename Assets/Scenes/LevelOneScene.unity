@@ -5752,7 +5752,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
-  cooldown: 0.5
+  moveCooldown: 0.5
+  rotateCooldown: 0.3
+  scoreUI: {fileID: 0}
+  batteryUI: {fileID: 0}
   moveSpeed: 2
   rotationSpeed: 10
   referenceSpeed: 0.5
@@ -8722,6 +8725,8 @@ MonoBehaviour:
   playerRightKey: 100
   playerFrontKey: 119
   playerBackKey: 115
+  playerDisposeKey: 32
+  playerRotateKey: 9
 --- !u!1001 &633313315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17011,6 +17016,7 @@ MonoBehaviour:
   speed: 0.3
   maxOffset: 5
   minOffset: -4
+  offset: {x: 10, y: 5, z: -6}
 --- !u!1001 &1469771741
 PrefabInstance:
   m_ObjectHideFlags: 0
