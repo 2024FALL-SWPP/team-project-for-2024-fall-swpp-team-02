@@ -26,9 +26,9 @@ public class PlayerBagController
         return _playerBag.GetTrashList();
     }
 
-    public TrashType AddTrash(TrashType trashType)
+    public void AddTrash(TrashType trashType)
     {
-        return _playerBag.AddTrash(trashType);
+        _playerBag.AddTrash(trashType);
     }
 
     public bool RemoveTrash()

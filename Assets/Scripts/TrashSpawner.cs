@@ -27,22 +27,6 @@ public class TrashSpawner : MonoBehaviour
         _gridInformation.SetPositionProperty(tilePos, "objectInstance", (Object)trashObject);
     }
 
-    public void Spawn(Vector3Int tilePos, TrashType trashType)
-    {
-        var marker = trashMapping.SubtypeToMarker(trashType);
-        if (marker == null) return;
-
-        _trashTilemap.SetTile(tilePos, marker);
-        var tileObject = trashMapping.SubtypeToPrefab(trashType);
-
-        var offset = Quaternion.Euler(90f, 0f, 0f) * _trashTilemap.cellSize / 2;
-        var objectPos = _trashTilemap.CellToWorld(tilePos) + offset;
-
-        var trashObject = Instantiate(tileObject, objectPos, Quaternion.identity);
-        _gridInformation.SetPositionProperty(tilePos, "objectInstance", (Object)trashObject);
-
-    }
-
     /// <summary>
     /// Generates trash at start. Please do not call if it's not the start of level.
     /// </summary>
