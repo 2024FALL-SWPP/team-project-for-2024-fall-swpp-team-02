@@ -4,37 +4,37 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-  public static AudioManager Instance;
+    public static AudioManager Instance;
 
-  [SerializeField] private AudioSource musicSource;
-  [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
 
-  [SerializeField] private List<AudioClip> musicClips;
-  [SerializeField] private List<AudioClip> sfxClips;
+    [SerializeField] private List<AudioClip> musicClips;
+    [SerializeField] private List<AudioClip> sfxClips;
 
-  private void Awake()
-  {
-    if (Instance == null)
+    private void Awake()
     {
-      Instance = this;
-      DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    else
+
+    public void PlayMusic(string name)
     {
-      Destroy(gameObject);
+        int index = musicClips.FindIndex(clip => clip.name == name);
+        musicSource.clip = musicClips[index];
+        musicSource.Play();
     }
-  }
 
-  public void PlayMusic(string name)
-  {
-    int index = musicClips.FindIndex(clip => clip.name == name);
-    musicSource.clip = musicClips[index];
-    musicSource.Play();
-  }
-
-  public void PlaySFX(string name)
-  {
-    int index = sfxClips.FindIndex(clip => clip.name == name);
-    sfxSource.PlayOneShot(sfxClips[index]);
-  }
+    public void PlaySFX(string name)
+    {
+        int index = sfxClips.FindIndex(clip => clip.name == name);
+        sfxSource.PlayOneShot(sfxClips[index]);
+    }
 }
