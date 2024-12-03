@@ -149,7 +149,7 @@ public class PlayerBehaviour : MonoBehaviour
         _isInCooldown = false;
     }
 
-    private void DecreaseLife()
+    public void DecreaseLife()
     {
         life--;
         batteryUI.UpdateBattery(life);
