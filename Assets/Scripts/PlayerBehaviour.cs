@@ -125,7 +125,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
 
-    private void DecreaseLife()
+    public void DecreaseLife()
     {
         life--;
         batteryUI.UpdateBattery(life);

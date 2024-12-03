@@ -19,4 +19,15 @@ public class TrashInfo : MonoBehaviour
         }
         return "";
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("TrashInfo OnTriggerEnter " + other.gameObject.name);
+        if (other.gameObject.CompareTag("CameraBoundary"))
+        {
+            ScoreModel.Instance.IncTrashMissCount();
+            FindObjectOfType<PlayerBehaviour>().DecreaseLife();
+            Destroy(gameObject);
+        }
+    }
 }
