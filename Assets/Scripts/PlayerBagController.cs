@@ -11,6 +11,11 @@ public class PlayerBagController
         _playerBag = new PlayerBag(bagSize);
     }
 
+    public bool IsBagFull()
+    {
+        return _playerBag.IsBagFull();
+    }
+
     public TrashType GetFirstTrashType()
     {
         return _playerBag.CheckTrash();

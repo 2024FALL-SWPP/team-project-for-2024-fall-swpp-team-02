@@ -20,6 +20,7 @@ public class TrashPicker : MonoBehaviour
 
     private void Update()
     {
+        if (CheckIfBagIsFull()) return;
         if (!CheckIfTrashExists()) return;
 
         var trashObject = FindTrashAtCurrentPos();
@@ -32,6 +33,11 @@ public class TrashPicker : MonoBehaviour
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
         StartCoroutine(ReplaceTrash(trashPosOnTilemap, trashObject, poppedTrash));
+    }
+
+    private bool CheckIfBagIsFull()
+    {
+        return StageManager.Instance.bagController.IsBagFull();
     }
 
     private GameObject FindTrashAtCurrentPos()
