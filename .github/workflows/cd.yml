@@ -1,0 +1,54 @@
+name: Build and Deploy Unity Project to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Unity Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v4
+        with:
+          unityVersion: 2021.3.42f1
+          targetPlatform: WebGL       # WebGL 빌드
+        env:
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      # 3. 빌드 결과를 Pages artifact로 업로드
+      - name: Upload Pages Artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/WebGL
+
+  # Deploy job
+  deploy:
+    # build job에 의존
+    needs: build
+    runs-on: ubuntu-latest
+
+    # Pages 배포를 위한 권한 설정
+    permissions:
+      pages: write      # Pages에 배포
+      id-token: write   # 배포 출처 검증
+
+    # GitHub Pages 환경으로 배포
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # 1. Pages artifact 배포
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
