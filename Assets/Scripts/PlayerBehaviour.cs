@@ -101,14 +101,14 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
-if (_isInCooldown) return;
+        if (_isInCooldown) return;
         if (_obstacleTilemap.HasTile(cellPos))
         {
             AudioManager.Instance.PlaySFX("MotionFail");
             return;
         }
         _isInCooldown = true;
-        
+
         this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
