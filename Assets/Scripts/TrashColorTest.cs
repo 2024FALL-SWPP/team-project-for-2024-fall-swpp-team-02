@@ -10,15 +10,16 @@ public class TrashColorTest
     [Test]
     public void TrashColorPasses()
     {
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.PaperGrouped), "Yellow");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.PaperSingle1), "Yellow");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.PaperSingle2), "Yellow");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.CanHorizontal), "Red");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.CanVertical), "Red");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.PetBottleHorizontal), "Blue");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.PetBottleVertical), "Blue");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.Banana), "Green");
-        Assert.AreEqual(TrashInfo.TrashColor(TrashType.None), "");
+        TrashMapping trashMapping = Resources.Load("Storages/TrashMapping") as TrashMapping;
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.PaperGrouped), "Yellow");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.PaperSingle1), "Yellow");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.PaperSingle2), "Yellow");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.CanHorizontal), "Red");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.CanVertical), "Red");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.PetBottleHorizontal), "Blue");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.PetBottleVertical), "Blue");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.Banana), "Green");
+        Assert.AreEqual(trashMapping.TrashColor(TrashType.None), "");
     }
 
 }
