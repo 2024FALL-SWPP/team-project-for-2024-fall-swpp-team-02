@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
 
-    [SerializeField] private List<AudioClip> musicClips;
+    [SerializeField] private AudioClip musicClip;
     [SerializeField] private List<AudioClip> sfxClips;
 
     private void Awake()
@@ -25,10 +25,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayMusic(string name)
+    public void Start()
     {
-        int index = musicClips.FindIndex(clip => clip.name == name);
-        musicSource.clip = musicClips[index];
+        musicSource.clip = musicClip;
         musicSource.Play();
     }
 
