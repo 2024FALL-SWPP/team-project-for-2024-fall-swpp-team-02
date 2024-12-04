@@ -42,13 +42,13 @@ public class StageManager : MonoBehaviour
 
     public void GameOver()
     {
-        AudioManager.Instance.PlaySFX("GameFail");
+        AudioManager.Instance.PlaySFXAfter("GameFail", 0.0f);
         SceneManager.LoadScene("LevelOverScene");
     }
 
     public void GameClear()
     {
-        AudioManager.Instance.PlaySFX("GameClear");
+        AudioManager.Instance.PlaySFXAfter("GameClear", 0.0f);
         SceneManager.LoadScene("LevelClearScene");
     }
 

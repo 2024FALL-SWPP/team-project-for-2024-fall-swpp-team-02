@@ -6340,6 +6340,7 @@ MonoBehaviour:
   obstacleGrid: {fileID: 471756671}
   moveCooldown: 0.5
   rotateCooldown: 0.3
+  trashDisposeCooldown: 0.3
   scoreUI: {fileID: 263583589}
   batteryUI: {fileID: 491570866}
   moveSpeed: 2
@@ -7751,7 +7752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 514516225}
   sfxSource: {fileID: 514516225}
-  musicClips: []
+  musicClip: {fileID: 8300000, guid: 5ebbe520d33e94e24a2cb4c3303a17a8, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 7390242c56c0f415e890dd99613ca53b, type: 3}
   - {fileID: 8300000, guid: b4ef42cd99dcd4236a9ae0f38aacd14b, type: 3}
