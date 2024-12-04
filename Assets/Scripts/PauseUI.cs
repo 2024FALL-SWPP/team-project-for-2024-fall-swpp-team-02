@@ -19,6 +19,7 @@ public class PauseUI : MonoBehaviour
 
     public void Click()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         if (StageManager.Instance.IsPaused()) StageManager.Instance.ResumeGame();
         else StageManager.Instance.PauseGame();
     }

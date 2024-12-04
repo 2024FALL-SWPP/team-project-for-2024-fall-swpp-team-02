@@ -99,11 +99,13 @@ public class LevelClear : MonoBehaviour
 
     public void GoBack()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("LevelSelectScene");
     }
 
     public void Restart()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("Level" + level.ToString());
     }
 }
