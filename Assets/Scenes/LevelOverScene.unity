@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1390902946}
   sfxSource: {fileID: 1390902946}
-  musicClip: {fileID: 0}
+  musicClip: {fileID: 8300000, guid: 3aea6d7073f634096bf0ba2f49e89fbb, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 7390242c56c0f415e890dd99613ca53b, type: 3}
   - {fileID: 8300000, guid: b4ef42cd99dcd4236a9ae0f38aacd14b, type: 3}

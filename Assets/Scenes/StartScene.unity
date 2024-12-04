@@ -642,17 +642,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 265894363}
   sfxSource: {fileID: 265894363}
-  musicClip: {fileID: 8300000, guid: 3aea6d7073f634096bf0ba2f49e89fbb, type: 3}
-  sfxClips:
-  - {fileID: 8300000, guid: 7390242c56c0f415e890dd99613ca53b, type: 3}
-  - {fileID: 8300000, guid: b4ef42cd99dcd4236a9ae0f38aacd14b, type: 3}
-  - {fileID: 8300000, guid: a6271c6ee967a4eb2a7367b9024bbb55, type: 3}
-  - {fileID: 8300000, guid: 04f37d69565b44276a1ba2c903f78202, type: 3}
-  - {fileID: 8300000, guid: 89166699b72e649a391c1cc8d454874e, type: 3}
-  - {fileID: 8300000, guid: 7ea99cd1cbd6d4797a84945c49d3b858, type: 3}
-  - {fileID: 8300000, guid: 1c442e764fdd04ea68c382d9a7ca40e2, type: 3}
-  - {fileID: 8300000, guid: 5a538b46c328949799e430407dc73c95, type: 3}
-  - {fileID: 8300000, guid: 211996ab31c1b4d8ca6df1289a0beca7, type: 3}
 --- !u!4 &265894365
 Transform:
   m_ObjectHideFlags: 0
