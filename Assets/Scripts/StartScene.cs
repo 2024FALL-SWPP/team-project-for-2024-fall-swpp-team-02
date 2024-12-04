@@ -20,11 +20,13 @@ public class StartScene : MonoBehaviour
 
     public void SelectLevel()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("LevelSelectScene");
     }
 
     public void PowerUp()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("PowerUpManageScene");
     }
 }

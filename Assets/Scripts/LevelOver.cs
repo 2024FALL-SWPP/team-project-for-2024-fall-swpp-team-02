@@ -24,6 +24,7 @@ public class LevelOver : MonoBehaviour
 
     public void GoBack()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("LevelSelectScene");
     }
 
@@ -41,5 +42,7 @@ public class LevelOver : MonoBehaviour
                 SceneManager.LoadScene("LevelThreeScene");
                 break;
         }
+        AudioManager.Instance.PlaySFX("ButtonClick");
+        SceneManager.LoadScene("Level" + level.ToString());
     }
 }

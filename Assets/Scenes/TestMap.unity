@@ -17433,6 +17433,7 @@ MonoBehaviour:
   speed: 1
   maxOffset: 5
   minOffset: -2
+  offset: {x: 10, y: 7, z: -5}
 --- !u!1 &1465612515
 GameObject:
   m_ObjectHideFlags: 0
@@ -20405,7 +20406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1647660698}
   sfxSource: {fileID: 1647660698}
-  musicClips: []
+  musicClip: {fileID: 8300000, guid: 5ebbe520d33e94e24a2cb4c3303a17a8, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 7390242c56c0f415e890dd99613ca53b, type: 3}
   - {fileID: 8300000, guid: b4ef42cd99dcd4236a9ae0f38aacd14b, type: 3}
@@ -28692,7 +28693,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapGrid: {fileID: 1657165278}
   obstacleGrid: {fileID: 471756671}
-  cooldown: 0.5
+  moveCooldown: 0.5
+  rotateCooldown: 0.3
+  trashDisposeCooldown: 0.3
   scoreUI: {fileID: 791139499}
   batteryUI: {fileID: 1622840274}
   moveSpeed: 2
