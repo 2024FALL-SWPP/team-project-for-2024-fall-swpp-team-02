@@ -34,6 +34,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField] private float referenceSpeed = 0.5f;
 
+    private TrashMapping _trashMapping;
+
     private float goalZ;
 
     private void Start()
@@ -42,6 +44,7 @@ public class PlayerBehaviour : MonoBehaviour
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
         _targetDirection = Vector3.zero;
+        _trashMapping = FindObjectOfType<TrashSpawner>().trashMapping;
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
@@ -251,7 +254,7 @@ public class PlayerBehaviour : MonoBehaviour
             StartCoroutine(nameof(TrashDisposeCooldownRoutine));
             return;
         }
-        var trashColor = TrashInfo.TrashColor(trashType);
+        var trashColor = _trashMapping.TrashColor(trashType);
 
         var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
         var frontObstacle = _obstacleTilemap.GetTile(frontPos);
@@ -264,7 +267,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         TriggerThrowAnimation();
         AudioManager.Instance.PlaySFX("TrashDispose");
-        while (trashType != TrashType.None && TrashInfo.TrashColor(trashType) == trashColor)
+        while (trashType != TrashType.None && _trashMapping.TrashColor(trashType) == trashColor)
         {
             StageManager.Instance.bagController.RemoveTrash();
             trashType = StageManager.Instance.bagController.GetFirstTrashType();
