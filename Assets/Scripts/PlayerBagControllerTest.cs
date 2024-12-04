@@ -34,14 +34,4 @@ public class PlayerBagControllerTest
         Assert.AreEqual(trashList[1], TrashType.PaperSingle1);
         Assert.AreEqual(trashList[2], TrashType.CanVertical);
     }
-
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator PlayerBagControllerTestWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-    }
 }
