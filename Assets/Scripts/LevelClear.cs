@@ -117,7 +117,7 @@ public class LevelClear : MonoBehaviour
                 SceneManager.LoadScene("LevelThreeScene");
                 break;
         }
-        
+
         AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("Level" + level.ToString());
     }
