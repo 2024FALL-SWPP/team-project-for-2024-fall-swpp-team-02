@@ -54,6 +54,6 @@ public class PlayerBag
     private void UpdateUI()
     {
         if (InventoryUI.Instance == null) return;
-        InventoryUI.Instance.UpdateInventory(StageManager.Instance.bagController.GetTrashList());
+        InventoryUI.Instance.UpdateInventory(GetTrashList());
     }
 }
