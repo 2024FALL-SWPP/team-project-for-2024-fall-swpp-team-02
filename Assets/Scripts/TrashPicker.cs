@@ -27,6 +27,8 @@ public class TrashPicker : MonoBehaviour
         var trashInfo = trashObject.GetComponent<TrashInfo>();
 
         _playerBehaviour.TriggerPickUpAnimation();
+        AudioManager.Instance.PlaySFX("TrashPick");
+
         StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
 
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);

@@ -40,6 +40,7 @@ public class PlayerBag
 
     public void RotateBag()
     {
+        if (_bag.Count <= 1) return;
         var firstTrash = _bag.Dequeue();
         _bag.Enqueue(firstTrash);
         UpdateUI();
