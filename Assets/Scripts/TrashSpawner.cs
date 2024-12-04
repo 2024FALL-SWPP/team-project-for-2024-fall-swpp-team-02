@@ -5,7 +5,7 @@ public class TrashSpawner : MonoBehaviour
 {
     private GameObject[] _trashes;
     [SerializeField] private Grid trashGrid;
-    [SerializeField]
+
     public TrashMapping trashMapping
     {
         get; private set;
