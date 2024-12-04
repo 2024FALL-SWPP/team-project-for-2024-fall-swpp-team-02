@@ -8,6 +8,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Grid obstacleGrid;
     [SerializeField] private float moveCooldown = 0.5f;
     [SerializeField] private float rotateCooldown = 0.3f;
+    [SerializeField] private float trashDisposeCooldown = 0.3f;
 
     public ScoreUI scoreUI;
     public BatteryUI batteryUI;
@@ -18,7 +19,8 @@ public class PlayerBehaviour : MonoBehaviour
     private int life = 3;
 
     private Tilemap _obstacleTilemap;
-    private bool _isInCooldown;
+    private bool _isInCooldown = false;
+    private bool _isInTrashDisposeCooldown = false;
     private bool _isWalking = false;
     private Vector3 _targetPosition;
     private Vector3 _targetDirection;
@@ -101,9 +103,14 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
-
-        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
+        if (_isInCooldown) return;
+        if (_obstacleTilemap.HasTile(cellPos))
+        {
+            Rotate(direction);
+            return;
+        }
         _isInCooldown = true;
+
         this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
@@ -117,11 +124,16 @@ public class PlayerBehaviour : MonoBehaviour
     public void Rotate(Direction direction)
     {
         if (_isInCooldown) return;
-
         _isInCooldown = true;
-        this.direction = direction;
-        _targetDirection = direction.Value;
-
+        if (this.direction.Equals(direction))
+        {
+            AudioManager.Instance.PlaySFX("MotionFail");
+        }
+        else
+        {
+            this.direction = direction;
+            _targetDirection = direction.Value;
+        }
         StartCoroutine(nameof(RotateCooldownRoutine));
     }
 
@@ -150,6 +162,12 @@ public class PlayerBehaviour : MonoBehaviour
         _isInCooldown = false;
     }
 
+    private IEnumerator TrashDisposeCooldownRoutine()
+    {
+        yield return new WaitForSeconds(trashDisposeCooldown);
+        _isInTrashDisposeCooldown = false;
+    }
+
     public void DecreaseLife()
     {
         life--;
@@ -157,6 +175,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (life <= 0)
             StageManager.Instance.GameOver();
+
+        AudioManager.Instance.PlaySFX("PlayerHurt");
     }
 
     // Should be removed after moving life field out from PlayerBehaviour
@@ -166,6 +186,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (life > 3)
             life = 3;
         batteryUI.UpdateBattery(life);
+
+        AudioManager.Instance.PlaySFX("PlayerRestoreLife");
     }
 
     public void Respawn()
@@ -214,23 +236,40 @@ public class PlayerBehaviour : MonoBehaviour
     public void RotateBag()
     {
         StageManager.Instance.bagController.RotateBag();
+        AudioManager.Instance.PlaySFX("BagRotate");
     }
 
     public void DisposeTrash()
     {
+        if (_isInTrashDisposeCooldown) return;
+        _isInTrashDisposeCooldown = true;
+
         var trashType = StageManager.Instance.bagController.GetFirstTrashType();
-        if (trashType == TrashType.None) return;
+        if (trashType == TrashType.None)
+        {
+            AudioManager.Instance.PlaySFX("MotionFail");
+            StartCoroutine(nameof(TrashDisposeCooldownRoutine));
+            return;
+        }
+        var trashColor = TrashInfo.TrashColor(trashType);
 
         var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
         var frontObstacle = _obstacleTilemap.GetTile(frontPos);
 
-        if (frontObstacle)
+        if (frontObstacle == null || !frontObstacle.name.StartsWith(trashColor))
         {
-            if (frontObstacle.name.StartsWith(TrashInfo.TrashColor(trashType)))
-            {
-                StageManager.Instance.bagController.RemoveTrash();
-                TriggerThrowAnimation();
-            }
+            AudioManager.Instance.PlaySFX("MotionFail");
+            StartCoroutine(nameof(TrashDisposeCooldownRoutine));
+            return;
         }
+        TriggerThrowAnimation();
+        AudioManager.Instance.PlaySFX("TrashDispose");
+        while (trashType != TrashType.None && TrashInfo.TrashColor(trashType) == trashColor)
+        {
+            StageManager.Instance.bagController.RemoveTrash();
+            trashType = StageManager.Instance.bagController.GetFirstTrashType();
+        }
+
+        StartCoroutine(nameof(TrashDisposeCooldownRoutine));
     }
 }
