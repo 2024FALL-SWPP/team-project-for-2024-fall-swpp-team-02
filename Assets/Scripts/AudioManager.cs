@@ -27,8 +27,11 @@ public class AudioManager : MonoBehaviour
 
     public void Start()
     {
-        musicSource.clip = musicClip;
-        musicSource.Play();
+        if (musicClip)
+        {
+            musicSource.clip = musicClip;
+            musicSource.Play();
+        }
     }
 
     public void PlaySFX(string name)
