@@ -39,7 +39,7 @@ public class LevelOver : MonoBehaviour
         if (robot != null)
         {
             float zRotationOffset = Mathf.PingPong(Time.time * rotationSpeed, rotationRange * 2) - rotationRange;
-            
+
             Vector3 currentRotation = robot.transform.eulerAngles;
             robot.transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y, initialZRotation + zRotationOffset);
         }
