@@ -17,7 +17,7 @@ public class TrashMappingItem
     public bool MatchObject(TrashType type)
     {
         return trashPrefabs.Any(
-            prefab => prefab.GetComponent<TrashInfo>().trashType == type
+            prefab => prefab.GetComponent<TrashBehaviour>().trashType == type
             );
     }
 

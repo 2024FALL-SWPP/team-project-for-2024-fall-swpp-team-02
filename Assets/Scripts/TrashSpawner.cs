@@ -5,7 +5,11 @@ public class TrashSpawner : MonoBehaviour
 {
     private GameObject[] _trashes;
     [SerializeField] private Grid trashGrid;
-    [SerializeField] private TrashMapping trashMapping;
+    [SerializeField]
+    public TrashMapping trashMapping
+    {
+        get; private set;
+    }
 
     private Tilemap _trashTilemap;
     private GridInformation _gridInformation;

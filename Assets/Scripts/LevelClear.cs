@@ -99,11 +99,26 @@ public class LevelClear : MonoBehaviour
 
     public void GoBack()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("LevelSelectScene");
     }
 
     public void Restart()
     {
+        switch (level)
+        {
+            case 1:
+                SceneManager.LoadScene("LevelOneScene");
+                break;
+            case 2:
+                SceneManager.LoadScene("LevelTwoScene");
+                break;
+            case 3:
+                SceneManager.LoadScene("LevelThreeScene");
+                break;
+        }
+
+        AudioManager.Instance.PlaySFX("ButtonClick");
         SceneManager.LoadScene("Level" + level.ToString());
     }
 }
