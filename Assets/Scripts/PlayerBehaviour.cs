@@ -44,7 +44,7 @@ public class PlayerBehaviour : MonoBehaviour
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
         _targetDirection = Vector3.zero;
-        _trashMapping = FindObjectOfType<TrashSpawner>().trashMapping;
+        _trashMapping = Resources.Load("Storages/TrashMapping") as TrashMapping;
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
