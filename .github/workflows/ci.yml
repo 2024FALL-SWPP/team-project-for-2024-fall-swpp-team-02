@@ -3,7 +3,6 @@ name: Unity Test
 on:
   push:
     branches:
-      - main
       - dev
   pull_request:
     branches:
@@ -18,7 +17,7 @@ permissions:
   statuses: write
 
 jobs:
-  build:
+  test:
     name: Unity Tests
     runs-on: ubuntu-latest
     steps:
