@@ -60,7 +60,7 @@ public class SelectLevel : MonoBehaviour
                 if (i < level3Data.stars) level3Stars[i].enabled = true;
             }
         }
-        coinText.text = "$ " + DataManager.Instance.GetCoinData().coins;
+        coinText.text = "  " + DataManager.Instance.GetCoinData().coins;
     }
 
     // Update is called once per frame
