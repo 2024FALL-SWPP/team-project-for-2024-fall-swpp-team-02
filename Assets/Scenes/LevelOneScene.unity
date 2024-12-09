@@ -12877,14 +12877,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557564062}
-  m_LocalRotation: {x: 0.0000000074505815, y: -0.5, z: 0.8660254, w: -0.0000000074505815}
-  m_LocalPosition: {x: 0, y: 0, z: 2.4}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -0, y: -0, z: 5}
   m_LocalScale: {x: 2.2000003, y: 1, z: 1.1999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1464877208}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
 --- !u!54 &557564064
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12934,7 +12934,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -6334086625026889772, guid: 81b5c9d00aa5c7442a8358e0e4beb75e, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -35493,7 +35493,7 @@ MonoBehaviour:
   player: {fileID: 1793613791}
   speed: 0.5
   maxOffset: 5
-  minOffset: -4
+  minOffset: -2.5
   offset: {x: 10, y: 7, z: -5}
 --- !u!1001 &1466073028
 PrefabInstance:
@@ -46895,7 +46895,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashGrid: {fileID: 2048045676}
-  trashMapping: {fileID: 11400000, guid: c6844e95e016d374c9c1664efff4c6fa, type: 2}
 --- !u!1001 &1911870139
 PrefabInstance:
   m_ObjectHideFlags: 0
