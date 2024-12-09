@@ -5,7 +5,11 @@ public class TrashSpawner : MonoBehaviour
 {
     private GameObject[] _trashes;
     [SerializeField] private Grid trashGrid;
-    [SerializeField] private TrashMapping trashMapping;
+
+    public TrashMapping trashMapping
+    {
+        get; private set;
+    }
 
     private Tilemap _trashTilemap;
     private GridInformation _gridInformation;
@@ -47,6 +51,7 @@ public class TrashSpawner : MonoBehaviour
     {
         _trashTilemap = trashGrid.GetComponentInChildren<Tilemap>();
         _gridInformation = trashGrid.GetComponent<GridInformation>();
+        trashMapping = Resources.Load("Storages/TrashMapping") as TrashMapping;
 
         InitialSpawn();
         _trashTilemap.GetComponent<TilemapRenderer>().enabled = false;

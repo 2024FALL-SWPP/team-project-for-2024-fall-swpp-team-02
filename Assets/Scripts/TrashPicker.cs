@@ -24,7 +24,7 @@ public class TrashPicker : MonoBehaviour
         var trashObject = FindTrashAtCurrentPos();
         if (trashObject == null) return;
 
-        var trashInfo = trashObject.GetComponent<TrashInfo>();
+        var trashInfo = trashObject.GetComponent<TrashBehaviour>();
 
         _playerBehaviour.TriggerPickUpAnimation();
         AudioManager.Instance.PlaySFX("TrashPick");

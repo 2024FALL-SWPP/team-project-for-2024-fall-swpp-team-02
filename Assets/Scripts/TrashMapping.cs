@@ -6,13 +6,13 @@ public class TrashMapping : ScriptableObject
 {
     public TrashMappingItem[] items;
 
-    public TileBase SubtypeToMarker(TrashType type)
+    public string TrashColor(TrashType type)
     {
-        if (type == TrashType.None) return null;
+        if (type == TrashType.None) return "";
 
         foreach (var item in items)
-            if (item.MatchObject(type)) return item.markerTile;
-        return null;
+            if (item.MatchObject(type)) return item.markerTile.name.Replace("TrashMarker", "");
+        throw new System.InvalidOperationException("No mapping found for " + type);
     }
 
     public GameObject MarkerToPrefab(TileBase marker)
