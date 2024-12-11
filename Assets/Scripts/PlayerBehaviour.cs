@@ -171,15 +171,19 @@ public class PlayerBehaviour : MonoBehaviour
         _isInTrashDisposeCooldown = false;
     }
 
-    public void DecreaseLife()
+    public bool DecreaseLife()
     {
         life--;
         batteryUI.UpdateBattery(life);
 
         if (life <= 0)
+        {
             StageManager.Instance.GameOver();
+            return true;
+        }
 
         AudioManager.Instance.PlaySFX("PlayerHurt");
+        return false;
     }
 
     // Should be removed after moving life field out from PlayerBehaviour
@@ -195,7 +199,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Respawn()
     {
-        DecreaseLife();
+        if (DecreaseLife())
+            return;
 
         transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
         // If respawn position is past goal, clear game
