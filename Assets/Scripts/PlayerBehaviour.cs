@@ -202,7 +202,13 @@ public class PlayerBehaviour : MonoBehaviour
         if (DecreaseLife())
             return;
 
-        transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
+        var newPos = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
+        if (newPos.z >= goalZ)
+        {
+            newPos.z = goalZ;
+        }
+        transform.position = newPos;
+
         // If respawn position is past goal, clear game
         if (transform.position.z >= goalZ)
         {
