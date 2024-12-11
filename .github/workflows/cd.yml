@@ -42,10 +42,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Remove test code
-        run:
-          rm -rf Assets/Scripts/Tests
+        run: rm -rf Assets/Scripts/Tests
           rm Assets/Scripts/*.asmdef{,.meta}
 
       - name: Build Unity Project
