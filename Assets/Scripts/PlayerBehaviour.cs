@@ -6,7 +6,9 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private Grid mapGrid;
     [SerializeField] private Grid obstacleGrid;
-    [SerializeField] private float cooldown = 0.5f;
+    [SerializeField] private float moveCooldown = 0.5f;
+    [SerializeField] private float rotateCooldown = 0.3f;
+    [SerializeField] private float trashDisposeCooldown = 0.3f;
 
     public ScoreUI scoreUI;
     public BatteryUI batteryUI;
@@ -17,9 +19,11 @@ public class PlayerBehaviour : MonoBehaviour
     private int life = 3;
 
     private Tilemap _obstacleTilemap;
-    private bool _isInCooldown;
+    private bool _isInCooldown = false;
+    private bool _isInTrashDisposeCooldown = false;
     private bool _isWalking = false;
     private Vector3 _targetPosition;
+    private Vector3 _targetDirection;
 
     private Animator _animator;
 
@@ -30,6 +34,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField] private float referenceSpeed = 0.5f;
 
+    private TrashMapping _trashMapping;
+
     private float goalZ;
 
     private void Start()
@@ -37,6 +43,8 @@ public class PlayerBehaviour : MonoBehaviour
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
         _animator = GetComponent<Animator>();
         _targetPosition = transform.position;
+        _targetDirection = Vector3.zero;
+        _trashMapping = Resources.Load("Storages/TrashMapping") as TrashMapping;
 
         goalZ = StageManager.Instance.GetGoalZ();
         float _startZ = transform.position.z;
@@ -54,32 +62,40 @@ public class PlayerBehaviour : MonoBehaviour
             // Move the player toward the target position
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
 
-            // Rotate the player toward the direction of movement
-            Vector3 directionToTarget = _targetPosition - transform.position;
-            if (directionToTarget != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
-
             // Stop walking when reaching the target position
             if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
             {
+                QuantizeRotation();
+                _targetDirection = Vector3.zero;
                 _isWalking = false;
                 _animator.SetBool("isWalking", false);
+
+                QuantizePosition();
             }
+        }
+
+        // Rotate the player toward the direction of movement
+        if (_targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         ScoreModel.Instance.UpdateScore(transform.position.z);
 
         if (transform.position.z >= goalZ)
         {
-            int level = DataManager.Instance.GetActiveLevelData().level;
-            int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
-            ActiveLevelData levelClearData = new ActiveLevelData(level, score);
-            DataManager.Instance.SetActiveLevelData(levelClearData);
-            StageManager.Instance.GameClear();
+            ClearGame();
         }
+    }
+
+    private void ClearGame()
+    {
+        int level = DataManager.Instance.GetActiveLevelData().level;
+        int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+        ActiveLevelData levelClearData = new ActiveLevelData(level, score);
+        DataManager.Instance.SetActiveLevelData(levelClearData);
+        StageManager.Instance.GameClear();
     }
 
     /// <summary>
@@ -90,44 +106,80 @@ public class PlayerBehaviour : MonoBehaviour
     public void Move(Direction direction)
     {
         var cellPos = mapGrid.WorldToCell(transform.position + direction.Value);
+        if (_isInCooldown) return;
+        if (_obstacleTilemap.HasTile(cellPos))
+        {
+            Rotate(direction);
+            return;
+        }
+        _isInCooldown = true;
 
-        if (_isInCooldown || _obstacleTilemap.HasTile(cellPos)) return;
         this.direction = direction;
 
         _targetPosition = transform.position + direction.Value;
+        _targetDirection = direction.Value;
         _isWalking = true;
         _animator.SetBool("isWalking", true);
 
+        StartCoroutine(nameof(MoveCooldownRoutine));
+    }
+
+    public void Rotate(Direction direction)
+    {
+        if (_isInCooldown) return;
         _isInCooldown = true;
-        StartCoroutine(nameof(CooldownRoutine));
+        if (this.direction.Equals(direction))
+        {
+            AudioManager.Instance.PlaySFX("MotionFail");
+        }
+        else
+        {
+            this.direction = direction;
+            _targetDirection = direction.Value;
+        }
+        StartCoroutine(nameof(RotateCooldownRoutine));
     }
 
     // Temporary function set the trigger "triggerThrow" and "triggerPickUp"
     public void TriggerThrowAnimation()
     {
-        _animator.SetTrigger("triggerThrow");
+        _animator.Play("InLevel.Throw");
 
     }
     public void TriggerPickUpAnimation()
     {
-        _animator.SetTrigger("triggerPickUp");
-
+        _animator.Play("InLevel.Pick Up");
     }
 
-    private IEnumerator CooldownRoutine()
+    private IEnumerator MoveCooldownRoutine()
     {
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(moveCooldown);
         _isInCooldown = false;
     }
 
+    private IEnumerator RotateCooldownRoutine()
+    {
+        yield return new WaitForSeconds(rotateCooldown);
+        QuantizeRotation();
+        _targetDirection = Vector3.zero;
+        _isInCooldown = false;
+    }
 
-    private void DecreaseLife()
+    private IEnumerator TrashDisposeCooldownRoutine()
+    {
+        yield return new WaitForSeconds(trashDisposeCooldown);
+        _isInTrashDisposeCooldown = false;
+    }
+
+    public void DecreaseLife()
     {
         life--;
         batteryUI.UpdateBattery(life);
 
         if (life <= 0)
             StageManager.Instance.GameOver();
+
+        AudioManager.Instance.PlaySFX("PlayerHurt");
     }
 
     // Should be removed after moving life field out from PlayerBehaviour
@@ -137,6 +189,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (life > 3)
             life = 3;
         batteryUI.UpdateBattery(life);
+
+        AudioManager.Instance.PlaySFX("PlayerRestoreLife");
     }
 
     public void Respawn()
@@ -144,6 +198,12 @@ public class PlayerBehaviour : MonoBehaviour
         DecreaseLife();
 
         transform.position = new Vector3(_respawnX, transform.position.y, transform.position.z + _respawnZAdd);
+        // If respawn position is past goal, clear game
+        if (transform.position.z >= goalZ)
+        {
+            ClearGame();
+            return;
+        }
 
         // If there's an obstacle on the respawn position, move to the nearest empty block
         int dx = 1;
@@ -162,25 +222,57 @@ public class PlayerBehaviour : MonoBehaviour
         _animator.SetBool("isWalking", false);
     }
 
+    private void QuantizePosition()
+    {
+        var x = Mathf.Round(transform.position.x - 0.5f) + 0.5f;
+        var z = Mathf.Round(transform.position.z - 0.5f) + 0.5f;
+
+        transform.position = new Vector3(x, transform.position.y, z);
+    }
+
+    private void QuantizeRotation()
+    {
+        if (_targetDirection == Vector3.zero) return;
+        transform.rotation = Quaternion.LookRotation(_targetDirection);
+    }
+
     public void RotateBag()
     {
         StageManager.Instance.bagController.RotateBag();
+        AudioManager.Instance.PlaySFX("BagRotate");
     }
 
     public void DisposeTrash()
     {
+        if (_isInTrashDisposeCooldown) return;
+        _isInTrashDisposeCooldown = true;
+
         var trashType = StageManager.Instance.bagController.GetFirstTrashType();
-        if (trashType == TrashType.None) return;
+        if (trashType == TrashType.None)
+        {
+            AudioManager.Instance.PlaySFX("MotionFail");
+            StartCoroutine(nameof(TrashDisposeCooldownRoutine));
+            return;
+        }
+        var trashColor = _trashMapping.TrashColor(trashType);
 
         var frontPos = mapGrid.WorldToCell(transform.position + direction.Value);
         var frontObstacle = _obstacleTilemap.GetTile(frontPos);
 
-        if (frontObstacle)
+        if (frontObstacle == null || !frontObstacle.name.StartsWith(trashColor))
         {
-            if (frontObstacle.name.StartsWith(TrashInfo.TrashColor(trashType)))
-            {
-                StageManager.Instance.bagController.RemoveTrash();
-            }
+            AudioManager.Instance.PlaySFX("MotionFail");
+            StartCoroutine(nameof(TrashDisposeCooldownRoutine));
+            return;
         }
+        TriggerThrowAnimation();
+        AudioManager.Instance.PlaySFX("TrashDispose");
+        while (trashType != TrashType.None && _trashMapping.TrashColor(trashType) == trashColor)
+        {
+            StageManager.Instance.bagController.RemoveTrash();
+            trashType = StageManager.Instance.bagController.GetFirstTrashType();
+        }
+
+        StartCoroutine(nameof(TrashDisposeCooldownRoutine));
     }
 }

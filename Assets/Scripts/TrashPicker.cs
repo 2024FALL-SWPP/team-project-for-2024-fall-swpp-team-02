@@ -7,27 +7,38 @@ public class TrashPicker : MonoBehaviour
 
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
+    private PlayerBehaviour _playerBehaviour;
 
     private void Start()
     {
         _trashTilemap = trashGrid.GetComponentInChildren<Tilemap>();
         _gridInfo = trashGrid.GetComponent<GridInformation>();
+        _playerBehaviour = FindObjectOfType<PlayerBehaviour>();
     }
 
     private void Update()
     {
+        if (CheckIfBagIsFull()) return;
         if (!CheckIfTrashExists()) return;
 
         var trashObject = FindTrashAtCurrentPos();
         if (trashObject == null) return;
 
-        var trashInfo = trashObject.GetComponent<TrashInfo>();
+        var trashInfo = trashObject.GetComponent<TrashBehaviour>();
+
+        _playerBehaviour.TriggerPickUpAnimation();
+        AudioManager.Instance.PlaySFX("TrashPick");
 
         StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
 
         var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
-        Destroy(trashObject);
+        Destroy(trashObject, 0.15f);
         _trashTilemap.SetTile(trashPosOnTilemap, null);
+    }
+
+    private bool CheckIfBagIsFull()
+    {
+        return StageManager.Instance.bagController.IsBagFull();
     }
 
     private GameObject FindTrashAtCurrentPos()

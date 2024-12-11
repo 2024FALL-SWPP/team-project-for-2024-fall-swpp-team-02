@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,11 +42,13 @@ public class StageManager : MonoBehaviour
 
     public void GameOver()
     {
+        AudioManager.Instance.PlaySFXAfter("GameFail", 0.0f);
         SceneManager.LoadScene("LevelOverScene");
     }
 
     public void GameClear()
     {
+        AudioManager.Instance.PlaySFXAfter("GameClear", 0.0f);
         SceneManager.LoadScene("LevelClearScene");
     }
 
