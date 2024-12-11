@@ -119,6 +119,6 @@ public class LevelClear : MonoBehaviour
         }
 
         AudioManager.Instance.PlaySFX("ButtonClick");
-        
+
     }
 }

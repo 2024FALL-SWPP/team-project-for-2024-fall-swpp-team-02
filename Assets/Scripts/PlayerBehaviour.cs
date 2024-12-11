@@ -223,7 +223,7 @@ public class PlayerBehaviour : MonoBehaviour
         // Stop walking animation
         _isWalking = false;
         _animator.SetBool("isWalking", false);
-        
+
         // Play Respawn Particle
         particleManager.PlayRespawnEffect(transform.position);
     }

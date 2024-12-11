@@ -15,7 +15,7 @@ public class ParticleManager : MonoBehaviour
             Instantiate(respawnEffect, position, Quaternion.identity).Play();
         }
     }
-    
+
     public void PlayDisposeEffect(Vector3 position)
     {
         if (disposeEffect != null)
@@ -23,7 +23,7 @@ public class ParticleManager : MonoBehaviour
             Instantiate(disposeEffect, position, Quaternion.identity).Play();
         }
     }
-    
+
     public IEnumerator PlayLevelClearEffect(Vector3 position)
     {
         if (clearEffect != null)
@@ -32,5 +32,5 @@ public class ParticleManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1.5f);
     }
-    
+
 }
