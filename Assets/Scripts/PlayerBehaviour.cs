@@ -38,6 +38,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float goalZ;
 
+    [SerializeField] private ParticleManager particleManager;
+
     private void Start()
     {
         _obstacleTilemap = obstacleGrid.GetComponentInChildren<Tilemap>();
@@ -85,12 +87,13 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (transform.position.z >= goalZ)
         {
-            ClearGame();
+            StartCoroutine(ClearGame());
         }
     }
 
-    private void ClearGame()
+    private IEnumerator ClearGame()
     {
+        yield return StartCoroutine(particleManager.PlayLevelClearEffect(transform.position));
         int level = DataManager.Instance.GetActiveLevelData().level;
         int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
         ActiveLevelData levelClearData = new ActiveLevelData(level, score);
@@ -201,7 +204,7 @@ public class PlayerBehaviour : MonoBehaviour
         // If respawn position is past goal, clear game
         if (transform.position.z >= goalZ)
         {
-            ClearGame();
+            StartCoroutine(ClearGame());
             return;
         }
 
@@ -220,6 +223,9 @@ public class PlayerBehaviour : MonoBehaviour
         // Stop walking animation
         _isWalking = false;
         _animator.SetBool("isWalking", false);
+        
+        // Play Respawn Particle
+        particleManager.PlayRespawnEffect(transform.position);
     }
 
     private void QuantizePosition()
@@ -272,6 +278,7 @@ public class PlayerBehaviour : MonoBehaviour
             StageManager.Instance.bagController.RemoveTrash();
             trashType = StageManager.Instance.bagController.GetFirstTrashType();
         }
+        particleManager.PlayDisposeEffect(transform.position);
 
         StartCoroutine(nameof(TrashDisposeCooldownRoutine));
     }
