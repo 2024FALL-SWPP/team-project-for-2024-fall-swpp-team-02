@@ -10,6 +10,7 @@
     "includePlatforms": [
         "Editor",
         "macOSStandalone",
+        "WebGL",
         "WindowsStandalone64"
     ],
     "excludePlatforms": [],
