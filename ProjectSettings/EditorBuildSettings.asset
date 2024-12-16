@@ -17,12 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelOverScene.unity
     guid: ca2a9c695ed3945ff943098a2d6f24e4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestMap.unity
     guid: 6f9f83dc75524264c95161cf8f4e81d9
   - enabled: 1
     path: Assets/Scenes/LevelOneScene.unity
-    guid: 12aeb0472bffa4ff584fef0c82b2d640
+    guid: cb9176b1820f8214a8494a22d2d54464
   - enabled: 1
     path: Assets/Scenes/LevelTwoScene.unity
     guid: fe8ade306f51443068c08bc28a7b38d5
