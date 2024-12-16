@@ -9,7 +9,7 @@ public class ShowDescription : MonoBehaviour
 
     public void Show()
     {
-            Application.OpenURL(url);
+        Application.OpenURL(url);
     }
 }
 
