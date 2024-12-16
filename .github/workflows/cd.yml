@@ -57,7 +57,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
       - name: Copy Other Pages Files
-        run: cp -r Pages/ build/WebGL/WebGL
+        run: cp -r Pages/* build/WebGL/WebGL/
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
