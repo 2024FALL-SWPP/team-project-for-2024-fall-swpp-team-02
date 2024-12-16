@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eco-Hero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .message {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .coin-message {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .like-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .like-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="message">Eco-Hero를 플레이해 주셔서 감사합니다!</p>
+        <p class="coin-message" id="coin-message"></p>
+        <a href="#" class="like-button" id="like-button">좋아요</a>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function updateMessage() {
+            const coinCount = parseInt(getQueryParam("coin"), 10);
+            const coinMessageElement =
+                document.getElementById("coin-message");
+
+            if (!isNaN(coinCount)) {
+                let coinMessage = "";
+
+                if (coinCount >= 2 && coinCount <= 3) {
+                    coinMessage = `이런, 코인이 ${coinCount}개군요? 조금 더 힘내 봐요.`;
+                } else if (coinCount === 4) {
+                    coinMessage = `오, 코인이 ${coinCount}개라니, 꽤 하시네요.`;
+                } else if (coinCount === 5) {
+                    coinMessage = `코인이 ${coinCount}개? 대단한데요?`;
+                } else if (coinCount === 6) {
+                    coinMessage = `${coinCount}개.. 당신은 그저 빛... 하산하셔도 좋습니다.`;
+                }
+
+                coinMessageElement.textContent = coinMessage;
+            }
+        }
+
+        function handleLikeButtonClick() {
+            window.history.back();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateMessage();
+            const likeButton = document.getElementById("like-button");
+            likeButton.addEventListener("click", handleLikeButtonClick);
+        });
+    </script>
+</body>
+
+</html>
