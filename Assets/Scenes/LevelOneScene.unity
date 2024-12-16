@@ -15128,7 +15128,7 @@ MonoBehaviour:
   playerFrontKey: 119
   playerBackKey: 115
   playerDisposeKey: 32
-  playerRotateKey: 9
+  playerRotateKey: 300100002f010000
 --- !u!1001 &631619641
 PrefabInstance:
   m_ObjectHideFlags: 0
