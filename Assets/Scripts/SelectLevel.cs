@@ -88,9 +88,11 @@ public class SelectLevel : MonoBehaviour
     }
     public void SelectLevel3()
     {
-        ActiveLevelData activeLevelData = new ActiveLevelData(3);
-        DataManager.Instance.SetActiveLevelData(activeLevelData);
-        SceneManager.LoadScene("LevelThreeScene");
+        string link = "https://2024fall-swpp.github.io/team-project-for-2024-fall-swpp-team-02/ending.html?coin=" + DataManager.Instance.GetCoinData().coins;
+        Application.OpenURL(link);
+        // ActiveLevelData activeLevelData = new ActiveLevelData(3);
+        // DataManager.Instance.SetActiveLevelData(activeLevelData);
+        // SceneManager.LoadScene("LevelThreeScene");
     }
 
     public void GoBack()

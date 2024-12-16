@@ -15,13 +15,19 @@ public class LevelClear : MonoBehaviour
     public TextMeshProUGUI coinsText;
     public List<Image> starsList;
     private int level;
+
+    private int[][] scoreMapping = new int[][]
+    {
+        new int[] {150, 115, 0},
+        new int[] {260, 200, 0},
+    };
     void Start()
     {
         ActiveLevelData activeLevelData = DataManager.Instance.GetActiveLevelData();
         int score = activeLevelData.score;
         level = activeLevelData.level;
 
-        int starsCollected = CalculateStars(score);
+        int starsCollected = CalculateStars(score, level);
         int coinsCollected = CalculateCoins(level, starsCollected);
 
         scoreText.text = "Score: " + score.ToString();
@@ -43,11 +49,12 @@ public class LevelClear : MonoBehaviour
 
     }
 
-    private int CalculateStars(int score)
+    private int CalculateStars(int score, int level)
     {
-        if (score >= 90) return 3;
-        else if (score >= 80) return 2;
-        else if (score >= 70) return 1;
+        var levelScoreMapping = scoreMapping[level - 1];
+        if (score >= levelScoreMapping[0]) return 3;
+        else if (score >= levelScoreMapping[1]) return 2;
+        else if (score >= levelScoreMapping[2]) return 1;
         else return 0;
     }
 

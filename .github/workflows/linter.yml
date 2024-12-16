@@ -44,6 +44,7 @@ jobs:
           FIX_MARKDOWN_PRETTIER: true
           FIX_JSON_PRETTIER: true
           FIX_YAML_PRETTIER: true
+          FIX_HTML_PRETTIER: true
       - name: Commit and push linting fixes
         # Run only on:
         # - Pull requests
