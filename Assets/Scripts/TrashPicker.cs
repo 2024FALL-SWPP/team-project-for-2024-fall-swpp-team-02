@@ -8,6 +8,7 @@ public class TrashPicker : MonoBehaviour
     private Tilemap _trashTilemap;
     private GridInformation _gridInfo;
     private PlayerBehaviour _playerBehaviour;
+    private Vector3Int lastVisitedPos = new(-100, -100, -100);
 
     private void Start()
     {
@@ -18,10 +19,22 @@ public class TrashPicker : MonoBehaviour
 
     private void Update()
     {
-        if (CheckIfBagIsFull()) return;
-        if (!CheckIfTrashExists()) return;
+        var markerPos = _trashTilemap.WorldToCell(transform.position);
+        bool alert = markerPos != lastVisitedPos;
+        lastVisitedPos = markerPos;
 
-        var trashObject = FindTrashAtCurrentPos();
+        if (!CheckIfTrashExists(markerPos)) return;
+        if (CheckIfBagIsFull())
+        {
+            if (alert)
+            {
+                AudioManager.Instance.PlaySFX("MotionFail");
+                // TODO Tint the playerbag red
+            }
+            return;
+        }
+
+        var trashObject = FindTrashAtPos(markerPos);
         if (trashObject == null) return;
 
         var trashInfo = trashObject.GetComponent<TrashBehaviour>();
@@ -30,10 +43,8 @@ public class TrashPicker : MonoBehaviour
         AudioManager.Instance.PlaySFX("TrashPick");
 
         StageManager.Instance.bagController.AddTrash(trashInfo.trashType);
-
-        var trashPosOnTilemap = _trashTilemap.WorldToCell(trashObject.transform.position);
         Destroy(trashObject, 0.15f);
-        _trashTilemap.SetTile(trashPosOnTilemap, null);
+        _trashTilemap.SetTile(markerPos, null);
     }
 
     private bool CheckIfBagIsFull()
@@ -41,15 +52,14 @@ public class TrashPicker : MonoBehaviour
         return StageManager.Instance.bagController.IsBagFull();
     }
 
-    private GameObject FindTrashAtCurrentPos()
+    private GameObject FindTrashAtPos(Vector3Int markerPos)
     {
-        var playerPosOnTilemap = _trashTilemap.WorldToCell(transform.position);
 
-        return _gridInfo.GetPositionProperty<GameObject>(playerPosOnTilemap, "objectInstance", null);
+        return _gridInfo.GetPositionProperty<GameObject>(markerPos, "objectInstance", null);
     }
 
-    private bool CheckIfTrashExists()
+    private bool CheckIfTrashExists(Vector3Int markerPos)
     {
-        return _trashTilemap.HasTile(_trashTilemap.WorldToCell(transform.position));
+        return _trashTilemap.HasTile(markerPos);
     }
 }
