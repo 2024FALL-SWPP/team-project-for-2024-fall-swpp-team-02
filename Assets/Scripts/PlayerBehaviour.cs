@@ -39,7 +39,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float goalZ;
 
     [SerializeField] private ParticleManager particleManager;
-    
+
     public CameraBehaviour camera;
 
     private void Start()
