@@ -39,6 +39,8 @@ public class PlayerBehaviour : MonoBehaviour
     private float goalZ;
 
     [SerializeField] private ParticleManager particleManager;
+    
+    public CameraBehaviour camera;
 
     private void Start()
     {
@@ -49,8 +51,7 @@ public class PlayerBehaviour : MonoBehaviour
         _trashMapping = Resources.Load("Storages/TrashMapping") as TrashMapping;
 
         goalZ = StageManager.Instance.GetGoalZ();
-        float _startZ = transform.position.z;
-        ScoreModel.Instance = new ScoreModel(_startZ, referenceSpeed, scoreUI);
+        ScoreModel.Instance = new ScoreModel(camera.transform.position.z, referenceSpeed, scoreUI);
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ public class PlayerBehaviour : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        ScoreModel.Instance.UpdateScore(transform.position.z);
+        ScoreModel.Instance.UpdateScore(camera.transform.position.z);
 
         if (transform.position.z >= goalZ)
         {
@@ -95,7 +96,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         yield return StartCoroutine(particleManager.PlayLevelClearEffect(transform.position));
         int level = DataManager.Instance.GetActiveLevelData().level;
-        int score = ScoreModel.Instance.CalculateFinalScore(transform.position.z);
+        int score = ScoreModel.Instance.CalculateFinalScore(camera.transform.position.z);
         ActiveLevelData levelClearData = new ActiveLevelData(level, score);
         DataManager.Instance.SetActiveLevelData(levelClearData);
         StageManager.Instance.GameClear();

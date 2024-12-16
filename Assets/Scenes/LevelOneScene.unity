@@ -44336,6 +44336,7 @@ MonoBehaviour:
   rotationSpeed: 10
   referenceSpeed: 0.5
   particleManager: {fileID: 666761485}
+  camera: {fileID: 1464877209}
 --- !u!114 &1793613793
 MonoBehaviour:
   m_ObjectHideFlags: 0
