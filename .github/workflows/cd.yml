@@ -41,11 +41,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Remove test code
         run: rm -rf Assets/Scripts/Tests
           rm Assets/Scripts/*.asmdef{,.meta}
-
+      - name: Copy Other Pages Files
+        run: |
+          mkdir -p build/WebGL/WebGL
+          cp -r Pages/* build/WebGL/WebGL/
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4
         with:
@@ -56,8 +58,6 @@ jobs:
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-      - name: Copy Other Pages Files
-        run: cp -r Pages/* build/WebGL/WebGL/
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -77,7 +77,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      # 1. Pages artifact 배포
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
