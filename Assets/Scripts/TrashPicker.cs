@@ -29,7 +29,7 @@ public class TrashPicker : MonoBehaviour
             if (alert)
             {
                 AudioManager.Instance.PlaySFX("MotionFail");
-                // TODO Tint the playerbag red
+                GameObject.Find("InventoryBackground").GetComponent<UIShake>().Shake(0.25f, 5f);
             }
             return;
         }
