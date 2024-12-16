@@ -13,23 +13,24 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if (StageManager.Instance.IsPaused()) return;
         // Player movement
-        if (Input.GetKey(playerLeftKey))
+        if (Input.GetKey(playerLeftKey) || Input.GetKey(KeyCode.LeftArrow))
         {
             player.Move(Direction.Left);
         }
 
-        if (Input.GetKey(playerRightKey))
+        if (Input.GetKey(playerRightKey) || Input.GetKey(KeyCode.RightArrow))
         {
             player.Move(Direction.Right);
         }
 
-        if (Input.GetKey(playerFrontKey))
+        if (Input.GetKey(playerFrontKey) || Input.GetKey(KeyCode.UpArrow))
         {
             player.Move(Direction.Front);
         }
 
-        if (Input.GetKey(playerBackKey))
+        if (Input.GetKey(playerBackKey) || Input.GetKey(KeyCode.DownArrow))
         {
             player.Move(Direction.Back);
         }
