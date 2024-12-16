@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 5
+  disposeEffect: {fileID: 2641121113345803941, guid: bac9dfb673bd44a83b396dc74e134bbf, type: 3}
 --- !u!65 &7971774641771999555
 BoxCollider:
   m_ObjectHideFlags: 0
