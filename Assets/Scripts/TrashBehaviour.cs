@@ -3,6 +3,7 @@ using UnityEngine;
 public class TrashBehaviour : MonoBehaviour
 {
     public TrashType trashType;
+    public ParticleSystem disposeEffect;
 
     void OnTriggerEnter(Collider other)
     {
@@ -10,6 +11,7 @@ public class TrashBehaviour : MonoBehaviour
         {
             ScoreModel.Instance.IncTrashMissCount();
             FindObjectOfType<PlayerBehaviour>().DecreaseLife();
+            Instantiate(disposeEffect, transform.position, Quaternion.identity).Play();
             Destroy(gameObject);
         }
     }
