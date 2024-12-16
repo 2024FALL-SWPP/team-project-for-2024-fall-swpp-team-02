@@ -28,7 +28,7 @@ public class ScoreModel
         float referenceTime = offsetZ / referenceSpeed;
         float playTime = Time.time - startTime;
         float clampedTimeScore = Mathf.Clamp(referenceTime - playTime, -20.0f, 20.0f);
-        return (int)(clampedTimeScore + 5 * (trashPickupCount + trashDisposeCount - trashMissCount) + 100);
+        return (int)(clampedTimeScore + 5 * (trashPickupCount + trashDisposeCount - trashMissCount));
     }
 
     public void UpdateScore(float currentZ)
@@ -37,7 +37,7 @@ public class ScoreModel
         float referenceTime = offsetZ / referenceSpeed;
         float playTime = Time.time - startTime;
         float clampedTimeScore = Mathf.Clamp(referenceTime - playTime, -20.0f, 20.0f);
-        int score = (int)(clampedTimeScore + 5 * (trashPickupCount + trashDisposeCount - trashMissCount) + 100);
+        int score = (int)(clampedTimeScore + 5 * (trashPickupCount + trashDisposeCount - trashMissCount));
         scoreUI.UpdateScore(score);
     }
 

@@ -18,8 +18,8 @@ public class LevelClear : MonoBehaviour
 
     private int[][] scoreMapping = new int[][]
     {
-        new int[] {250, 215, 0},
-        new int[] {360, 300, 0},
+        new int[] {150, 115, 0},
+        new int[] {260, 200, 0},
     };
     void Start()
     {
