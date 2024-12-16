@@ -66,6 +66,5 @@ public class LevelOver : MonoBehaviour
                 break;
         }
         AudioManager.Instance.PlaySFX("ButtonClick");
-        SceneManager.LoadScene("Level" + level.ToString());
     }
 }
