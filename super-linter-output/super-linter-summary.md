@@ -7,6 +7,8 @@
 | GITHUB_ACTIONS             | Pass ✅           |
 | GITLEAKS                   | Pass ✅           |
 | GIT_MERGE_CONFLICT_MARKERS | Pass ✅           |
+| HTML                       | Pass ✅           |
+| HTML_PRETTIER              | Pass ✅           |
 | JSON                       | Pass ✅           |
 | JSON_PRETTIER              | Pass ✅           |
 | MARKDOWN                   | Pass ✅           |
